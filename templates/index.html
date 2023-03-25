@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Upload an image</title>
+  </head>
+  <body>
+    <h1>Upload an image</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="image" required><br><br>
+      <label for="allergens">Allergens:</label>
+      <input type="text" name="allergens" id="allergens" required><br><br>
+      <input type="submit" value="Upload">
+    </form>
+  </body>
+</html>
