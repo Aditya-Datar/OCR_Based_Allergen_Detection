@@ -3,6 +3,7 @@ from flask import Flask, render_template, request
 from allergenDetector import check_allergens
 
 app = Flask(__name__)
+allergens = []
 
 @app.route('/')
 def index():
@@ -26,6 +27,16 @@ def upload():
     allergens = request.form['allergens'].split(',')
     
     return check_allergens(allergens, filepath)
+
+@app.route('/uploadAllergens', methods=['GET'])
+def uploadAllergensGet():
+    return render_template('uploadAllergens.html')
+
+@app.route('/uploadAllergens', methods=['POST'])
+def uploadAllergens():
+    global allergens 
+    allergens = request.form['allergens'].split(',')
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
