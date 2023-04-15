@@ -31,7 +31,7 @@ def extract_text_from_image(image_path):
 def compare_ingredients(ingredients, allergens):
     # Convert the ingredients and allergens to lowercase for case-insensitive comparison
     ingredients = [ingredient.lower() for ingredient in ingredients]
-    print(ingredients);
+    print(ingredients)
     allergens = [allergen.lower() for allergen in allergens]
     
     # Check if any of the allergens are present in the ingredients list
