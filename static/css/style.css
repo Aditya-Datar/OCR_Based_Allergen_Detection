@@ -1,0 +1,29 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    }
+#camera, #camera--view, #camera--sensor, #camera--output{
+    position: fixed;
+    height: 80%;
+    width: 100%;
+    object-fit: cover;
+}
+#camera--view, #camera--sensor, #camera--output{
+    transform: scaleX(-1);
+    filter: FlipH;
+}
+.camera-trigger{
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+}
+.taken{
+    height: 80%!important;
+    width: 100% !important;
+    transition: all 0.5s ease-in;
+    z-index: 2;
+}
