@@ -3,7 +3,6 @@ from pymongo import MongoClient
 import base64
 import cv2
 import numpy as np
-import json
 from allergenDetector import check_allergens
 import os
 from dotenv import load_dotenv
@@ -41,15 +40,23 @@ def login():
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
+        query = {
+            "$or": [
+                {"username": username},
+                {"email": email}
+            ]
+        }
         # Check if username already exists
-        if db.users.find_one({'username': username}) is not None:
-            return render_template('register.html', message='Username already exists')
+        user = db.users.find_one(query)
+        if user is not None:
+            return render_template('login.html', message='Username or email already exists')
         else:
             # Insert new user to the database
-            db.users.insert_one({'username': username, 'password': password})
+            db.users.insert_one({'username': username, 'password': password,'email': email})
             session['username'] = username
-            return redirect(url_for('index'))
+            return redirect(url_for('profile'))
     else:
         return render_template('login.html')
 
@@ -63,7 +70,7 @@ def logout():
 @app.route('/')
 def index():
     if 'username' in session:
-        return render_template('demoVideoCanvas.html')
+        return render_template('index.html')
     else:
         return redirect(url_for('login'))
 
@@ -84,6 +91,37 @@ def upload():
         return finalResponse
     else:
         return redirect(url_for('login'))
+
+# Profile page
+@app.route('/profile')
+def profile():
+    if 'username' in session:
+        user = db.users.find_one({'username': session['username']})
+        if user:
+            return render_template('profile.html', user=user)
+        else:
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+
+# Update profile endpoint
+@app.route('/update_profile', methods=['POST'])
+def update_profile():
+    if 'username' in session:
+        fullName = request.form.get('fullname')
+        email = request.form.get('email')
+        mobile = request.form.get('mobileNo')
+        gender = request.form.get('gender')
+        age = request.form.get('age')
+        allergenCategory = request.form.get('allergy')
+        user = db.users.find_one({'username': session['username']})
+        if user:
+            updatedUserDetails = {'fullName':fullName, 'email':email, 'mobile':mobile, 'gender':gender, 'age':age, 'allergenCategory':allergenCategory}
+            db.users.update_one({'username': session['username']}, {'$set': updatedUserDetails})
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('login'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
