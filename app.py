@@ -6,13 +6,19 @@ import numpy as np
 import json
 from allergenDetector import check_allergens
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+MONGO_URI = os.getenv("MONGO_URI")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 app = Flask(__name__)
-app.secret_key = 'secret_key'
+app.secret_key = SECRET_KEY
 
 allergens = ['milk', 'soya']
 # Configure the MongoDB database
-mongo = MongoClient('mongodb+srv://OcrDbUser:OcrDbUser@ocrallergendbcluster.2qugthp.mongodb.net/?retryWrites=true&w=majority')
+mongo = MongoClient(MONGO_URI)
 db = mongo["OcrAllergenDbCluster"]
 
 # Login page

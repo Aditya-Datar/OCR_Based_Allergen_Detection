@@ -3,3 +3,4 @@ opencv-python
 nltk
 flask
 flask_pymongo
+python-dotenv
