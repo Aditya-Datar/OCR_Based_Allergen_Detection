@@ -98,6 +98,7 @@ def profile():
     if 'username' in session:
         user = db.users.find_one({'username': session['username']})
         if user:
+            del user["_id"]
             return render_template('profile.html', user=user)
         else:
             return redirect(url_for('login'))
