@@ -12,8 +12,9 @@ app.secret_key = 'secret_key'
 
 allergens = ['milk', 'soya']
 # Configure the MongoDB database
-mongo = MongoClient('mongodb+srv://ocr:allergen@cluster0.w5vwpiq.mongodb.net/?retryWrites=true&w=majority')
-db = mongo["Cluster0"]
+mongo = MongoClient('mongodb+srv://OcrDbUser:OcrDbUser@ocrallergendbcluster.2qugthp.mongodb.net/?retryWrites=true&w=majority')
+db = mongo["OcrAllergenDbCluster"]
+
 # Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -26,6 +27,23 @@ def login():
             return redirect(url_for('index'))
         else:
             return render_template('login.html', message='Invalid username or password')
+    else:
+        return render_template('login.html')
+
+# Register page
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        # Check if username already exists
+        if db.users.find_one({'username': username}) is not None:
+            return render_template('register.html', message='Username already exists')
+        else:
+            # Insert new user to the database
+            db.users.insert_one({'username': username, 'password': password})
+            session['username'] = username
+            return redirect(url_for('index'))
     else:
         return render_template('login.html')
 
@@ -55,7 +73,9 @@ def upload():
         img = cv2.flip(img,1)
         filepath = os.path.join('uploads', 'img.jpg')
         cv2.imwrite(filepath, img)
-        return jsonify({'status': check_allergens(allergens, filepath)})
+        finalResponse = jsonify({'status': check_allergens(allergens, filepath)})
+        os.remove(filepath)
+        return finalResponse
     else:
         return redirect(url_for('login'))
 

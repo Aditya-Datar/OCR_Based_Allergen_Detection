@@ -1,34 +1,33 @@
 // Set constraints for the video stream
-var constraints = {
-    width: 1920,
-    height: 1080 ,
-    frameRate:30,
-    facingMode: "environment", 
-    audio: false,
-    aspectRatio:0.5625 };
+var constraints =
+{
+    video:{
+        width: 1920,
+        height: 1080 ,
+        frameRate:30,
+        facingMode: "environment", 
+        audio: false,
+        aspectRatio:0.5625 
+    }
+};
 // Define constants
-const cameraView = document.querySelector("#camera--view"),
-    cameraOutput = document.querySelector("#camera--output"),
-    cameraSensor = document.querySelector("#camera--sensor"),
-    cameraTrigger = document.querySelector("#camera--trigger"),
-    cancelButton = document.querySelector("#cancel-button"),
-    confirmButton = document.querySelector("#confirm-button"),
-    clickPhotoSection = document.querySelector("#clickPhoto"),
-    clickPhotoConfirmSection = document.querySelector("#clickPhotoConfirm")
+const cameraView = document.querySelector("#camera--view");
+    cameraOutput = document.querySelector("#camera--output");
+    cameraSensor = document.querySelector("#camera--sensor");
+    cameraTrigger = document.querySelector("#camera--trigger");
+    cancelButton = document.querySelector("#cancel-button");
+    confirmButton = document.querySelector("#confirm-button");
+    clickPhotoSection = document.querySelector("#clickPhoto");
+    clickPhotoConfirmSection = document.querySelector("#clickPhotoConfirm");
+    productStatusModal = document.querySelector("#productStatusModal");
+    modalBody = document.querySelector("#clickPhotoConfirm");
 // Access the device camera and stream to cameraView
 function cameraStart() {
     navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia(constraints)
         .then(function(stream) {
         track = stream.getTracks()[0];
-        track.applyConstraints(constraints).then(()=>{
-            cameraView.srcObject = stream;
-        })
-        .catch((e) => {
-            console.log("Error + " + e);
-            // The constraints could not be satisfied by the available devices.
-          });
-        
+        cameraView.srcObject = stream;
     })
     .catch(function(error) {
         console.error("Oops. Something is broken.", error);
@@ -62,12 +61,15 @@ confirmButton.onclick = function() {
         data:{"image_data": imagebase64data},  
         contentType: 'application/x-www-form-urlencoded',   
         success: function (out) {  
-            alert(out.status);  
+            $('#productStatusModal').modal('show');
+            $('#productStatusModal').find('.modal-body').text(out.status);
         },
         error: function (out) {  
-            alert("Upload Unsuccesful !!!");  
+            $('#productStatusModal').modal('show');
+            $('#productStatusModal').find('.modal-body').text("Upload unsuccessful!!");      
         } 
     });
+    cancelButton.click();
 };
 
 // Start the video stream when the window loads
