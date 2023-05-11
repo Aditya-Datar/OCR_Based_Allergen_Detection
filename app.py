@@ -109,12 +109,14 @@ def profile():
 @app.route('/update_profile', methods=['POST'])
 def update_profile():
     if 'username' in session:
+        # print(request.form)
+        # print(request.form.getlist('allergens'))
         fullName = request.form.get('fullname')
         email = request.form.get('email')
         mobile = request.form.get('mobileNo')
         gender = request.form.get('gender')
         age = request.form.get('age')
-        allergenCategory = request.form.get('allergy')
+        allergenCategory = request.form.getlist('allergens')
         user = db.users.find_one({'username': session['username']})
         if user:
             updatedUserDetails = {'fullName':fullName, 'email':email, 'mobile':mobile, 'gender':gender, 'age':age, 'allergenCategory':allergenCategory}
