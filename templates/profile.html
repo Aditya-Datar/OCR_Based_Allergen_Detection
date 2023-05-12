@@ -19,9 +19,30 @@
             if (allergenCategory.includes(checkbox.value))
                 checkbox.checked=true;
         }
-        otherAllergen = $("#otherAllergen");
-        otherAllergenList = user.finalAllergenList.pop()
-        otherAllergen.val(otherAllergenList);
+
+        $("#allergenList").val(user.allergenCategoryList);
+        $("#otherAllergen").val(user.otherAllergenList);
+
+        var allergenDict = {
+                "Gluten": ["rice", "quinoa", "oats", "corn", "potatoes", "fruits", "vegetables", "nuts", "seeds", "legumes"],
+                "Dairy": ["almond", "soy", "coconut", "oat milk", "cheese", "yogurt", "ice cream", "butter", "cream", "dried milk", "milk solids", "powered milk", "whey"],
+                "Nut": ["pumpkin", "sunflower", "sesame seeds", "snack mixes", "dried fruits", "raisins", "date", "prunes", "figs", "apricots", "peaches"],
+                "Soy": ["almond milk", "coconut milk", "oat milk"],
+                "Meat Based": ["egg", "fish", "red meat", "chicken", "mutton"],
+                "Fruit Based": ["Apple", "Avocado", "Banana", "Cherry", "Kiwi", "Mango", "Melon", "Nectarine", "Peach", "Pear", "Pineapple", "strawberry", "Plum", "Tomato", "Jackfruit"],
+                "Cruciferous": ["Broccoli", "cauliflower", "cabbage", "kale", "collard greens", "kohlrabi"]
+}
+        $("input[name='allergens']").on("change", () => {
+            console.log("checkboxes clicked");
+            var allergenList = [];
+            for (var checkbox of checkboxes) {
+                if ((checkbox.checked == true)) {
+                    allergenList += allergenDict[checkbox.value];
+                }
+            }
+            $("#allergenList").val(allergenList);
+
+        });
 
     }
 
@@ -210,10 +231,18 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-3">
+                                    <h6 class="mb-0">Allergen List</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <textarea id="allergenList" class="form-control" name="allergenList" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
                                     <h6 class="mb-0">Other Allergens</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" id="otherAllergen" class="form-control" min = 0 name="otherAllergen">
+                                    <input type="text" id="otherAllergen" class="form-control" name="otherAllergen">
                                 </div>
                             </div>
 
