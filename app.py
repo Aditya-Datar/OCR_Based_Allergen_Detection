@@ -15,7 +15,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
 
-allergens = ['milk', 'soya']
+allergens = ["rice", "quinoa", "oats", "corn", "potatoes", "fruits", "vegetables", "nuts", "seeds", "legumes"]
 # Configure the MongoDB database
 mongo = MongoClient(MONGO_URI)
 db = mongo["OcrAllergenDbCluster"]
@@ -108,18 +108,34 @@ def profile():
 # Update profile endpoint
 @app.route('/update_profile', methods=['POST'])
 def update_profile():
+    allergenDict = {
+        "Gluten":["rice", "quinoa", "oats", "corn", "potatoes", "fruits", "vegetables", "nuts", "seeds", "legumes"],
+        "Dairy":["almond", "soy","coconut","oat milk","cheese", "yogurt", "ice cream","butter",
+        "cream","dried milk","milk solids","powered milk","whey"],
+        "Nut" : ["pumpkin", "sunflower","sesame seeds","snack mixes","dried fruits","raisins","date","prunes","figs","apricots","peaches"],
+        "Soy" : ["almond milk", "coconut milk", "oat milk"],
+        "Meat Based": ["egg", "fish","red meat","chicken","mutton"],
+        "Fruit Based":["Apple","Avocado","Banana","Cherry","Kiwi","Mango","Melon","Nectraine","Peach","Pear","Pineapple","strawberry","Plum","Tomato","Jackfruit"],
+        "Cruciferous" : ["Broccoli","cauliflower","cabbage","kale","collard greens","kohlrabi"]
+        }
     if 'username' in session:
-        # print(request.form)
-        # print(request.form.getlist('allergens'))
         fullName = request.form.get('fullname')
         email = request.form.get('email')
         mobile = request.form.get('mobileNo')
         gender = request.form.get('gender')
         age = request.form.get('age')
         allergenCategory = request.form.getlist('allergens')
+        otherAllergenList = request.form.get('otherAllergen').split(",")
+        finalAllergenList = []
+        print(otherAllergenList)
+        print("Allergen Category ", allergenCategory)
+        for allergen in allergenCategory:
+            finalAllergenList += allergenDict[allergen]
+        if otherAllergenList[0] != '':
+            finalAllergenList.append(otherAllergenList)
         user = db.users.find_one({'username': session['username']})
         if user:
-            updatedUserDetails = {'fullName':fullName, 'email':email, 'mobile':mobile, 'gender':gender, 'age':age, 'allergenCategory':allergenCategory}
+            updatedUserDetails = {'fullName':fullName, 'email':email, 'mobile':mobile, 'gender':gender, 'age':age, 'allergenCategory':allergenCategory,'finalAllergenList':finalAllergenList}
             db.users.update_one({'username': session['username']}, {'$set': updatedUserDetails})
             return redirect(url_for('index'))
     else:
