@@ -99,6 +99,7 @@ def profile():
         user = db.users.find_one({'username': session['username']})
         if user:
             del user["_id"]
+            print(user)
             return render_template('profile.html', user=user)
         else:
             return redirect(url_for('login'))
@@ -141,6 +142,7 @@ def update_profile():
     else:
         return redirect(url_for('login'))
 
+# @app.route('/update_profile/allergen-list', methods=['GET'])
 
 if __name__ == '__main__':
     app.run(debug=True)
