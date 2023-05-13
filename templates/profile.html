@@ -23,15 +23,17 @@
         $("#allergenList").val(user.allergenCategoryList);
         $("#otherAllergen").val(user.otherAllergenList);
 
-        var allergenDict = {
-                "Gluten": ["rice", "quinoa", "oats", "corn", "potatoes", "fruits", "vegetables", "nuts", "seeds", "legumes"],
-                "Dairy": ["almond", "soy", "coconut", "oat milk", "cheese", "yogurt", "ice cream", "butter", "cream", "dried milk", "milk solids", "powered milk", "whey"],
-                "Nut": ["pumpkin", "sunflower", "sesame seeds", "snack mixes", "dried fruits", "raisins", "date", "prunes", "figs", "apricots", "peaches"],
-                "Soy": ["almond milk", "coconut milk", "oat milk"],
-                "Meat Based": ["egg", "fish", "red meat", "chicken", "mutton"],
-                "Fruit Based": ["Apple", "Avocado", "Banana", "Cherry", "Kiwi", "Mango", "Melon", "Nectarine", "Peach", "Pear", "Pineapple", "strawberry", "Plum", "Tomato", "Jackfruit"],
-                "Cruciferous": ["Broccoli", "cauliflower", "cabbage", "kale", "collard greens", "kohlrabi"]
-}
+        var allergenDict = 
+        {
+            "Gluten": ["rice", "quinoa", "oats", "corn", "potatoes", "fruits", "vegetables", "nuts", "seeds", "legumes"],
+            "Dairy": ["almond", "soy", "coconut", "oat milk", "cheese", "yogurt", "ice cream", "butter", "cream", "dried milk", "milk solids", "powered milk", "whey"],
+            "Nut": ["pumpkin", "sunflower", "sesame seeds", "snack mixes", "dried fruits", "raisins", "date", "prunes", "figs", "apricots", "peaches"],
+            "Soy": ["almond milk", "coconut milk", "oat milk"],
+            "Meat Based": ["egg", "fish", "red meat", "chicken", "mutton"],
+            "Fruit Based": ["Apple", "Avocado", "Banana", "Cherry", "Kiwi", "Mango", "Melon", "Nectarine", "Peach", "Pear", "Pineapple", "strawberry", "Plum", "Tomato", "Jackfruit"],
+            "Cruciferous": ["Broccoli", "cauliflower", "cabbage", "kale", "collard greens", "kohlrabi"]
+        }
+
         $("input[name='allergens']").on("change", () => {
             console.log("checkboxes clicked");
             var allergenList = [];
@@ -49,26 +51,28 @@
 </script>
 
 <style>
+    .main-body{
+        margin-top: 30px;
+    }
     body{
     background: #f7f7ff;
-    margin-top:20px;
-}
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 0 solid transparent;
-    border-radius: .25rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
-}
-.me-2 {
-    margin-right: .5rem!important;
-}
+    }
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid transparent;
+        border-radius: .25rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+    }
+    .me-2 {
+        margin-right: .5rem!important;
+    }
 </style>
 
 <div class="container">
@@ -78,12 +82,48 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="https://dubaidentalhospital.ae/en/Img/Avatar-Icon.png" alt="Admin" class="rounded-circle p-1 border" width="110">
+                            <img src="/static/img/avatar.png" alt="Admin" class="rounded-circle p-1 border" width="110">
                         </div>
                         <hr class="my-4">
                         <h5 class="d-flex justify-content-between align-items-center" style="justify-content: center !important;">Details of Each Allergy Category</h5>
                         <hr class="my-4">
-                        <ul class="list-group list-group-flush">
+                        <div class="table-responsive">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Allergen Type</th>
+                                    <th scope="col">Possible Ingredients</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>Gluten</td>
+                                    <td>Wheat, Barley, Rye</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Dairy</td>
+                                    <td>Milk, Cheese, Yoghurt</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Nut</td>
+                                    <td>Almonds, Peanuts, Walnuts</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Meat-Based</td>
+                                    <td>Fish, Chicken, Eggs, Mutton</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Fruit-Based</td>
+                                    <td>Pineapple, Lemons, Plums</td>
+                                  </tr>
+                                  <tr style="border-bottom: hidden;">
+                                    <td>Cruciferous</td>
+                                    <td>Broccoli, Spinach, Celery</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                        <!-- <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Gluten</h6>
                                 <span class="text-secondary">Wheat, Barley, Rye</span>
@@ -112,10 +152,10 @@
                                 <h6 class="mb-0">Cruciferous</h6>
                                 <span class="text-secondary">Broccoli, Spinach, Celery</span>
                             </li>
-                        </ul>
-                        <hr class="my-4">
+                        </ul> -->
+                        <hr style="margin-top: 0px;">
                         <div class="row">
-                            <div class="col-sm-9 text-secondary" style="text-align: left;">
+                            <div class="col-sm-12 text-secondary" style="text-align: center;">
                                 <a href="{{ url_for('logout') }}" class="btn btn-dark px-4">Log Out</a>
                             </div>
                         </div>
@@ -128,16 +168,16 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row mb-3">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Full Name</h6>
+                                <div class="col-sm-3 align-self-center">
+                                    <h6 class="mb-sm-0">Full Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <input type="text" class="form-control" value="{{ user.fullName }}" name="fullname" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
+                                <div class="col-sm-3 align-self-center">
+                                    <h6 class="mb-sm-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <input type="email" class="form-control" value="{{ user.email }}" name="email" required>
@@ -145,15 +185,15 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Mobile</h6>
+                                    <h6 class="mb-sm-0">Mobile</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <input type="text" class="form-control" value="{{ user.mobile }}" name="mobileNo" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Gender</h6>
+                                <div class="col-sm-3 align-self-center">
+                                    <h6 class="mb-sm-0">Gender</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <select class="form-control" id="gender" name="gender">
@@ -165,16 +205,16 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Age</h6>
+                                <div class="col-sm-3 align-self-center">
+                                    <h6 class="mb-sm-0">Age</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <input type="number" class="form-control" value="{{ user.age }}" min = 0 name="age">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Allergen Category</h6>
+                                <div class="col-sm-3 align-self-center">
+                                    <h6 class="mb-sm-0">Allergen Category</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <div class="row">
@@ -230,16 +270,16 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Allergen List</h6>
+                                <div class="col-sm-3 align-self-center">
+                                    <h6 class="mb-sm-0">Allergen List</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <textarea id="allergenList" class="form-control" name="allergenList" rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Other Allergens</h6>
+                                <div class="col-sm-3 align-self-center">
+                                    <h6 class="mb-sm-0">Other Allergens</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <input type="text" id="otherAllergen" class="form-control" name="otherAllergen">

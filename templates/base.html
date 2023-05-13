@@ -15,6 +15,7 @@
   }
   #navFont{
     font-size: 25px;
+    color: white;
   }
   @media screen and (max-width: 600px) {
   #img{
@@ -28,14 +29,14 @@
 }
 </style>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #563d7c !important;">
         <div class="container-fluid">
           <a href="{{ url_for('index') }}">
             <img src="/static/img/logo.png" alt="" srcset="" id="img">
           </a>
           <a class="navbar-brand" href="#" id="navFont">Allergen Detection System</a>
           <a href="{{ url_for('profile') }}">
-            <img src="https://dubaidentalhospital.ae/en/Img/Avatar-Icon.png" alt="" srcset="" id="img" style="border-radius: 200px;">
+            <img src="/static/img/avatar.png" alt="" srcset="" id="img" style="border-radius: 200px;">
           </a>
         </div>
       </nav>

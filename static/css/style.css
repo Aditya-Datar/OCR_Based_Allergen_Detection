@@ -3,6 +3,7 @@ html, body{
     padding: 0;
     height: 100%;
     width: 100%;
+    background: #f7f7ff;
     }
 #camera, #camera--view, #camera--sensor, #camera--output{
     position: fixed;
