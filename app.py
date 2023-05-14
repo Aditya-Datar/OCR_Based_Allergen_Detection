@@ -124,9 +124,9 @@ def update_profile():
     #     "Cruciferous" : ["Broccoli","cauliflower","cabbage","kale","collard greens","kohlrabi"]
     #     }
     if 'email' in session:
-        fullName = request.form.get('fullname')
-        email = request.form.get('email')
-        mobile = request.form.get('mobileNo')
+        fullName = request.form.get('fullname').strip()
+        email = request.form.get('email').strip()
+        mobile = request.form.get('mobileNo').strip()
         gender = request.form.get('gender')
         age = request.form.get('age')
 

@@ -19,7 +19,10 @@
                 checkbox.checked=true;
         }
 
+
+        $("#allergenList").attr("readonly", false);
         $("#allergenList").val(user.allergenCategoryList);
+        $("#allergenList").attr("readonly", true);
         $("#otherAllergen").val(user.otherAllergenList);
 
         var allergenDict = 
@@ -41,7 +44,9 @@
                     allergenList += allergenDict[checkbox.value];
                 }
             }
+            $("#allergenList").attr("readonly", false);
             $("#allergenList").val(allergenList);
+            $("#allergenList").attr("readonly", true);
 
         });
 
