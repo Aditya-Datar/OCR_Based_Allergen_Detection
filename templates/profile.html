@@ -95,7 +95,7 @@
 
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                <li><a class="nav-link scrollto active" href="{{ url_for('index') }}">Home</a></li>
                 <li><a class="nav-link scrollto" href="{{ url_for('profile') }}">Profile</a></li>
                 <a href="{{ url_for('logout') }}" class = "logout" style="color: white;">Logout</a>
             </ul>

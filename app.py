@@ -6,6 +6,8 @@ import numpy as np
 from allergenDetector import check_allergens
 import os
 from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 
 load_dotenv()
@@ -25,15 +27,14 @@ db = mongo["OcrAllergenDbCluster"]
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        print(request.form)
         email = request.form['email']
         password = request.form['password']
         user = db.users.find_one({'email': email})
-        if user and user['password'] == password:
+        if user and check_password_hash(user['password'], password):
             session['email'] = email
             return redirect(url_for('index'))
         else:
-            return render_template('login.html', message='Invalid username or password')
+            return render_template('login.html', message='Invalid email or password')
     else:
         if 'email' in session:
             return render_template('index.html')
@@ -46,7 +47,7 @@ def register():
     if request.method == 'POST':
         fullName = request.form['name'].strip()
         email = request.form['email'].strip()
-        password = request.form['password']
+        password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
         query = {
             "$or": [
                 {"email": email}
