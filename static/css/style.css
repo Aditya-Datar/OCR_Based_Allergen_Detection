@@ -1256,18 +1256,18 @@ body {
   #camera{
     margin-top: 100px;
     position: fixed;
-    height: 75%;
+    height: 70%;
     width: 100%;
     object-fit: cover;
   }
  #camera--view, #camera--sensor, #camera--output{
     position: fixed;
-    height: 75%;
+    height: 70%;
     width: 100%;
     object-fit: cover;
 }
 #camera--view, #camera--sensor, #camera--output{
-    transform: scaleX(-1);
+    transform: scaleX(1);
     filter: FlipH;
 }
 .camera-trigger{
@@ -1278,7 +1278,7 @@ body {
     box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
 }
 .taken{
-    height: 75%!important;
+    height: 70%!important;
     width: 100% !important;
     transition: all 0.5s ease-in;
     z-index: 2;
