@@ -1,6 +1,82 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+{% if user %}
+
+<style>
+    #camera--trigger {
+        background: transparent;
+        border-radius: 200px;
+        padding: 25px;
+        border-color: #3860b5;
+        border-style: groove;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    #cancel-button {
+        background: transparent;
+        border-radius: 200px;
+        padding: 20px;
+        border-color: red;
+        border-style: groove;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    #confirm-button {
+        background: transparent;
+        border-radius: 200px;
+        padding: 20px;
+        border-color: #07c804;
+        border-style: groove;
+        padding-top: 22px;
+        padding-bottom: 20px;
+    }
+
+    .fa-camera {
+        color: #3860b5;
+        font-size: 40px;
+    }
+
+    @media (max-width: 600px) {
+        #camera--trigger {
+            padding: 18px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .fa-camera {
+            font-size: 30px;
+        }
+    }
+</style>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top  header-transparent ">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <div class="logo">
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <a href="index.html"><img src="/static/img/logo.png" alt="" class="img-fluid"></a>
+
+        </div>
+        <div class="logo-text">
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <h1 style="text-align: center;"><a href="{{ url_for('index') }}" style="font-size: 20px;"><span>Allergen Detection</span> <br>System</a></h1>
+
+        </div>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                <li><a class="nav-link scrollto" href="{{ url_for('profile') }}">Profile</a></li>
+                <a href="{{ url_for('logout') }}" class = "logout" style="color: white;">Logout</a>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+
 <!-- Camera -->
 <main id="camera">
     <!-- Camera sensor -->
@@ -9,25 +85,369 @@
     <video id="camera--view" autoplay playsinline></video>
     <!-- Camera output -->
     <img src="//:0" alt="" id="camera--output" style="display: none;">
-    <div class="row align-items-center" id="clickPhoto" style="position: inherit;bottom: 4%;width: 100%;margin: 0 !important;text-align: center;">
+    <div class="row align-items-center" id="clickPhoto"
+        style="position: inherit;bottom: 4%;width: 100%;margin: 0 !important;text-align: center;">
         <div class="col-12">
             <!-- Camera trigger -->
-            <button class ="camera-trigger btn btn-dark" id="camera--trigger">Take a picture</button>
+            <button class="camera-trigger" id="camera--trigger"><i class="fa-solid fa-camera fa-2xl"></i></button>
         </div>
-    </div> 
+    </div>
 
-    <div class="row align-items-center" id="clickPhotoConfirm" style="display: none;position: inherit;bottom: 4%;width: 100%;margin: 0 !important;text-align: center;">
+    <div class="row align-items-center" id="clickPhotoConfirm"
+        style="display: none;position: inherit;bottom: 4%;width: 100%;margin: 0 !important;text-align: center;">
         <div class="col-6">
             <!-- Camera trigger -->
-            <button class ="camera-trigger btn btn-success" id="confirm-button">Confirm</button>
+            <button class="camera-trigger btn btn-success" id="confirm-button"><i class="fa-solid fa-check fa-2xl" style="color: #07c804;"></i></button>
         </div>
         <div class="col-6">
             <!-- Camera trigger -->
-            <button class ="camera-trigger btn btn-danger" id="cancel-button">Cancel</button>
+            <button class="camera-trigger" id="cancel-button"><i class="fa-solid fa-xmark fa-2xl" style="color: #b33737;"></i></button>
         </div>
     </div>
 </main>
 <!-- Reference to your JavaScript file -->
 <script src="https://docs.opencv.org/master/opencv.js"></script>
+
+{% else %}
+
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top  header-transparent ">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <div class="logo">
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <a href="index.html"><img src="/static/img/logo.png" alt="" class="img-fluid"></a>
+
+        </div>
+        <div class="logo-text">
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <h1 style="text-align: center;"><a href="{{ url_for('index') }}" style="font-size: 20px;"><span>Allergen Detection</span> <br>System</a></h1>
+
+        </div>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                <li><a class="nav-link scrollto" href="#features">App Features</a></li>
+                <li><a class="nav-link scrollto" href="#faq">F.A.Q</a></li>
+
+                <li><a class="getstarted scrollto" href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1"
+                data-aos="fade-up">
+                <div>
+                    <h1 class="ads">Allergen Detection System</h1>
+                    <h2>Empowering safe and informed food choices with OCR technology</h2>
+                    <a href="{{ url_for('login') }}"
+                        style="padding: 20px;background: #3860b5;color: white; border-radius: 15px;">Try Our Service <i
+                            class="fa-solid fa-camera fa-xl" style="margin-left: 5px;"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img"
+                data-aos="fade-up">
+                <img src="/static/img/hero-img.png" class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
+
+</section><!-- End Hero -->
+
+<main id="main">
+
+    <!-- ======= App Features Section ======= -->
+    <section id="features" class="features">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>App Features</h2>
+            </div>
+
+            <div class="row no-gutters">
+                <div class="col-xl-7 d-flex align-items-stretch order-2 order-lg-1">
+                    <div class="content d-flex flex-column justify-content-center">
+                        <div class="row">
+                            <div class="col-md-6 icon-box" data-aos="fade-up">
+                                <i class="bx bx-receipt"></i>
+                                <h4>OCR technology</h4>
+                                <p>The app uses advanced OCR technology to scan food product labels and detect allergen
+                                    information.</p>
+                            </div>
+                            <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                                <i class="bx bx-cube-alt"></i>
+                                <h4>Allergen database</h4>
+                                <p>The app includes a comprehensive database of common food allergens, making it easy
+                                    for users to identify potential allergens in the food they consume.</p>
+                            </div>
+                            <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                                <i class="bx bx-images"></i>
+                                <h4>Personalized settings</h4>
+                                <p>Users can customize the app settings to suit their specific needs, such as selecting
+                                    their specific food allergens, preferred language, and voice-over speed.</p>
+                            </div>
+                            <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                                <i class="bx bx-shield"></i>
+                                <h4>Ingredient analysis</h4>
+                                <p>The app can analyze the list of ingredients on a food product label and highlight any
+                                    potential allergens, even if they are not explicitly stated.</p>
+                            </div>
+                            <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="400">
+                                <i class="bx bx-atom"></i>
+                                <h4>Alerts and notifications</h4>
+                                <p>The app can send alerts and notifications to users when allergen information changes
+                                    for a saved product, ensuring they always have up-to-date information.</p>
+                            </div>
+                            <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="500">
+                                <i class="bx bx-id-card"></i>
+                                <h4>History and favorites</h4>
+                                <p>The app keeps track of the user's search history and allows them to save favorite
+                                    products, making it easy to access allergen information for frequently consumed
+                                    foods.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="image col-xl-5 d-flex align-items-stretch justify-content-center order-1 order-lg-2"
+                    data-aos="fade-left" data-aos-delay="100">
+                    <img src="/static/img/features.svg" class="img-fluid" alt="">
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End App Features Section -->
+
+    <!-- ======= Details Section ======= -->
+    <section id="details" class="details">
+        <div class="container">
+
+            <div class="row content">
+                <div class="col-md-4" data-aos="fade-right">
+                    <img src="/static/img/details-1.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-8 pt-4" data-aos="fade-up">
+                    <h3>How does it work?</h3>
+                    <p class="fst-italic">
+                        The Food Allergen Detection System Using OCR works by taking a photograph of a food product
+                        label using a smartphone or other device equipped with a camera. The OCR technology then scans
+                        the label for allergen information, such as the presence of peanuts, tree nuts, milk, soy, or
+                        wheat.
+                    </p>
+                    <ul>
+                        <li><i class="bi bi-check"></i> Take a photograph: The user takes a photograph of the food
+                            product label using a smartphone or other camera-equipped device. </li>
+                        <li><i class="bi bi-check"></i> Allergen detection: The system detects any potential allergens
+                            in the product, based on the allergen information found on the label.</li>
+                        <li><i class="bi bi-check"></i> Alert the user: If any potential allergens are detected, the
+                            system alerts the user through a text-to-speech feature, highlighting the presence of any
+                            allergens in the product.</li>
+                        <li><i class="bi bi-check"></i> Informed decisions: The user can then make informed decisions
+                            about the food they consume based on the allergen information provided by the app.</li>
+                        <li><i class="bi bi-check"></i> Avoid allergic reactions: By using the Food Allergen Detection
+                            System Using OCR, individuals with food allergies can avoid potential allergic reactions by
+                            quickly identifying potential allergens in the food they consume.</li>
+                    </ul>
+                    <p>
+                        Once the allergen information has been identified, the system can alert the user through a
+                        text-to-speech feature, highlighting the presence of any potential allergens in the product.
+                        This enables individuals with food allergies to make informed decisions about the food they
+                        consume and avoid potential allergic reactions.
+                    </p>
+                </div>
+            </div>
+
+
+
+
+            <div class="row content">
+                <div class="col-md-4 order-1 order-md-2" data-aos="fade-left">
+                    <img src="/static/img/details-2.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
+                    <h3>What is OCR?</h3>
+                    <p class="fst-italic">
+                        OCR stands for Optical Character Recognition, which is a technology used to convert scanned or
+                        photographed text into machine-readable text. OCR is commonly used in various industries,
+                        including banking, healthcare, and education, to convert physical documents into digital text.
+                    </p>
+                    <p>
+                        OCR technology has become increasingly advanced in recent years, with the ability to recognize
+                        various languages, characters, and handwriting styles. OCR is widely used in industries such as
+                        banking and healthcare to process large volumes of paper-based documents, such as invoices and
+                        medical records, quickly and efficiently.
+                    </p>
+                    <p>
+                        In addition to document processing, OCR technology is also used in other applications, including
+                        automated license plate recognition, automated translation, and facial recognition. The use of
+                        OCR technology has the potential to save time and increase accuracy in a wide range of
+                        industries, making it an essential tool for modern businesses and organizations.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row content">
+                <div class="col-md-4" data-aos="fade-right">
+                    <img src="/static/img/details-3.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-8 pt-5" data-aos="fade-up">
+                    <h3>What is a Food Allergen Detection System Using OCR?</h3>
+                    <p>This system is designed to help individuals with food allergies quickly and easily identify
+                        potential allergens in the food they consume. By using a smartphone or other camera-equipped
+                        device to capture an image of a food product label, the system can quickly scan for allergen
+                        information, such as the presence of peanuts, tree nuts, milk, soy, or wheat.</p>
+                    <ul>
+                        <li><i class="bi bi-check"></i> Uses OCR technology: The system uses OCR technology to scan food
+                            product labels for allergen information. </li>
+                        <li><i class="bi bi-check"></i> Converts text: The OCR technology converts the scanned text into
+                            machine-readable text. </li>
+                        <li><i class="bi bi-check"></i> Identifies allergens: The system can identify potential
+                            allergens in the food, such as peanuts, tree nuts, milk, soy, or wheat. </li>
+                        <li><i class="bi bi-check"></i> Personalized settings: The system can provide personalized
+                            settings for users, such as selecting their specific food allergens, preferred language, and
+                            voice-over speed. </li>
+                        <li><i class="bi bi-check"></i> Informed decisions: The system enables individuals with food
+                            allergies to make informed decisions about the food they consume and avoid potential
+                            allergic reactions.</li>
+                        <li><i class="bi bi-check"></i> Essential tool: The Food Allergen Detection System Using OCR can
+                            be an essential tool for individuals with food allergies, parents, and caregivers of
+                            children with food allergies. </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="row content">
+                <div class="col-md-4 order-1 order-md-2" data-aos="fade-left">
+                    <img src="/static/img/details-4.png" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
+                    <h3>Benefits of a Food Allergen Detection System Using OCR</h3>
+                    <p class="fst-italic">
+                        A Food Allergen Detection System Using OCR offers numerous benefits for individuals with food
+                        allergies. Firstly, it increases accessibility, enabling people with visual impairments or
+                        reading difficulties to easily access allergen information on food product labels. This is
+                        particularly important, as reading food labels can be a challenging task for some individuals.
+                    </p>
+                    <ul>
+                        <li><i class="bi bi-check"></i> Increased accuracy: OCR technology is highly accurate and can
+                            quickly and reliably identify allergen information on food product labels. </li>
+                        <li><i class="bi bi-check"></i> Customizable settings: Users can customize the system's settings
+                            to meet their specific needs, such as selecting their specific food allergens, preferred
+                            language, and voice-over speed. </li>
+                        <li><i class="bi bi-check"></i> Convenient: The Food Allergen Detection System Using OCR is a
+                            convenient and portable solution for individuals with food allergies, as it can be accessed
+                            on a smartphone or other camera-equipped device. </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Details Section -->
+
+
+
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+
+            <div class="accordion-list">
+                <ul>
+                    <li data-aos="fade-up">
+                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse"
+                            data-bs-target="#accordion-list-1">How accurate is the Food Allergen Detection System Using
+                            OCR? <i class="bx bx-chevron-down icon-show"></i><i
+                                class="bx bx-chevron-up icon-close"></i></a>
+                        <div id="accordion-list-1" class="collapse show" data-bs-parent=".accordion-list">
+                            <p>
+                                The accuracy of the system depends on various factors, such as the quality of the
+                                photograph and the clarity of the text on the label. However, OCR technology is highly
+                                advanced and can provide very accurate results in most cases.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li data-aos="fade-up" data-aos-delay="100">
+                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
+                            data-bs-target="#accordion-list-2" class="collapsed">What types of allergens can the system
+                            detect? <i class="bx bx-chevron-down icon-show"></i><i
+                                class="bx bx-chevron-up icon-close"></i></a>
+                        <div id="accordion-list-2" class="collapse" data-bs-parent=".accordion-list">
+                            <p>
+                                The system can detect a wide range of allergens, including peanuts, tree nuts, milk,
+                                soy, wheat, and more. Users can also customize the system to select their specific food
+                                allergens.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li data-aos="fade-up" data-aos-delay="200">
+                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
+                            data-bs-target="#accordion-list-3" class="collapsed">Can the system be used for restaurant
+                            menus or other non-packaged food items? <i class="bx bx-chevron-down icon-show"></i><i
+                                class="bx bx-chevron-up icon-close"></i></a>
+                        <div id="accordion-list-3" class="collapse" data-bs-parent=".accordion-list">
+                            <p>
+                                No, the system is designed specifically for food product labels. It cannot be used to
+                                detect allergens in restaurant menus or other non-packaged food items.
+                            </p>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </section><!-- End Frequently Asked Questions Section -->
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 footer-contact">
+                    <h3>Allergen Detection System</h3>
+                    <p>
+                        A108 Adam Street <br>
+                        New York, NY 535022<br>
+                        United States <br><br>
+                        <strong>Phone:</strong> +1 5589 55488 55<br>
+                        <strong>Email:</strong> info@example.com<br>
+                    </p>
+                </div>
+
+                <div class="col-lg-6 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#features">App Features</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#faq">FAQ</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+
+{% endif %}
 
 {% endblock %}

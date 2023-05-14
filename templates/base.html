@@ -1,73 +1,105 @@
-<html lang=”en”>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Name of your awesome camera app -->
-    <title>Camera App</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/style.css">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Allergen Detection System</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/css/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/css/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/css/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/css/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/css/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/static/css/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+  <!-- Template Main CSS File -->
+  <link href="/static/css/style.css" rel="stylesheet">
 </head>
-<style>
-  #img{
-    width: 80px;
-    margin-left: 12px;
-  }
-  #navFont{
-    font-size: 25px;
-    color: white;
-  }
-  @media screen and (max-width: 600px) {
-  #img{
-    margin-left: 0px;
-    width: 50px;
-    margin-right: 12px;
-  }
-  #navFont{
-    font-size: 18px;
-  }
-}
-</style>
+
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #563d7c !important;">
-        <div class="container-fluid">
-          <a href="{{ url_for('index') }}">
-            <img src="/static/img/logo.png" alt="" srcset="" id="img">
-          </a>
-          <a class="navbar-brand" href="#" id="navFont">Allergen Detection System</a>
-          <a href="{{ url_for('profile') }}">
-            <img src="/static/img/avatar.png" alt="" srcset="" id="img" style="border-radius: 200px;">
-          </a>
+
+  <div class="modal fade" id="productStatusModal" tabindex="-1" role="dialog" aria-labelledby="productStatusModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="justify-content: center;">
+          <h5 class="modal-title" id="productStatusModalLongTitle">Pop up</h5>
         </div>
-      </nav>
-      <!-- Modal -->
-      <div class="modal fade" id="productStatusModal" tabindex="-1" role="dialog" aria-labelledby="productStatusModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="productStatusModalLongTitle">Modal title</h5>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
+        <div class="modal-body" style="display: flex; justify-content: center;">
+          <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_bx4oomul.json"  background="transparent"  speed="1.25" loop autoplay class="lottie"></lottie-player>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-bs-dismiss="modal" class="okay-class">Okay</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="productStatusModalUnsuccesfull" tabindex="-1" role="dialog" aria-labelledby="productStatusModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="justify-content: center;">
+          <h5 class="modal-title" id="productStatusModalLongTitle">Pop up</h5>
+        </div>
+        <div class="modal-body" style="display: flex; justify-content: center;">
+          <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_3tA7zGNLpf.json"  background="transparent"  speed="1.25" loop autoplay class="lottie"></lottie-player>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-bs-dismiss="modal" class="okay-class">Okay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="Error404" tabindex="-1" role="dialog" aria-labelledby="productStatusModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="justify-content: center;">
+          <h5 class="modal-title" id="productStatusModalLongTitle">Pop up</h5>
+        </div>
+        <div class="modal-body" style="display: flex; justify-content: center;">
+          <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_n5q8wfa8.json"  background="transparent"  speed="1" loop autoplay class="lottie"></lottie-player>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-bs-dismiss="modal" class="okay-class">Okay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     {% block content %}
 
     {% endblock %}
-    <!-- Reference to your JavaScript file -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script src="/static/js/app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.0.4/tesseract.min.js" integrity="sha512-A+5lOL82/sdlk00parfruAQJGmaketFXPrYSICDHH65Zc75IalK8hktarFk9gPrYBjIe21MqyPYmyYw4ZaDUoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.0.4/worker.min.js" integrity="sha512-csHY7fyj4Uhl84hSqgVutWS9BXD0jT5n2H+jEg9JfkTUMjPP2bKugK1CY4bwhfo1lZFvSEZev44ZGmixcco1cQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ 
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  </body>
+  <!-- Vendor JS Files -->
+  <script src="/static/css/vendor/aos/aos.js"></script>
+  <script src="/static/css/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/css/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/css/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/90bd0ee8ed.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/static/js/main.js"></script>
+  <script src="/static/js/app.js"></script>
+
+</body>
+
 </html>

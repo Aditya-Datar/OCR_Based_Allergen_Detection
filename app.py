@@ -24,6 +24,7 @@ db = mongo["OcrAllergenDbCluster"]
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        print(request.form)
         username = request.form['username']
         password = request.form['password']
         user = db.users.find_one({'username': username})
@@ -58,21 +59,22 @@ def register():
             session['username'] = username
             return redirect(url_for('profile'))
     else:
-        return render_template('login.html')
+        return render_template('register.html')
 
 # Logout
 @app.route('/logout')
 def logout():
     session.pop('username', None)
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 # Index page
 @app.route('/')
 def index():
     if 'username' in session:
-        return render_template('index.html')
+        user = db.users.find_one({'username': session['username']})
+        return render_template('index.html',user=user)
     else:
-        return redirect(url_for('login'))
+        return render_template('index.html')
 
 # Upload endpoint
 @app.route('/upload', methods=['POST'])
@@ -145,4 +147,5 @@ def update_profile():
         return redirect(url_for('login'))
 
 if __name__ == '__main__':
+    # app.run(host="0.0.0.0",ssl_context='adhoc')
     app.run(debug=True)

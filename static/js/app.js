@@ -23,14 +23,14 @@ const cameraView = document.querySelector("#camera--view");
     modalBody = document.querySelector("#clickPhotoConfirm");
 // Access the device camera and stream to cameraView
 function cameraStart() {
-    navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(function(stream) {
+    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
         track = stream.getTracks()[0];
-        cameraView.srcObject = stream;
+        cameraView.srcObject = stream
     })
     .catch(function(error) {
-        console.error("Oops. Something is broken.", error);
+        $('#Error404').modal('show');
+        $('#Error404').find('.modal-title').text("Oops. Something is broken.", error); 
+        console.log("Oops. Something is broken.", error);
     });
 }
 // Take a picture when cameraTrigger is tapped
@@ -62,11 +62,11 @@ confirmButton.onclick = function() {
         contentType: 'application/x-www-form-urlencoded',   
         success: function (out) {  
             $('#productStatusModal').modal('show');
-            $('#productStatusModal').find('.modal-body').text(out.status);
+            $('#productStatusModal').find('.modal-title').text(out.status);
         },
         error: function (out) {  
-            $('#productStatusModal').modal('show');
-            $('#productStatusModal').find('.modal-body').text("Upload unsuccessful!!");      
+            $('#productStatusModalUnsuccesfull').modal('show');
+            $('#productStatusModalUnsuccesfull').find('.modal-title').text("Upload unsuccessful!!");      
         } 
     });
     cancelButton.click();

@@ -74,8 +74,28 @@
         margin-right: .5rem!important;
     }
 </style>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top  header">
+    <div class="container d-flex align-items-center justify-content-between">
 
-<div class="container">
+      <div class="logo">
+        <h1><a href="index.html">Allergen Detection System</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="{{ url_for('index') }}">Home</a></li>
+          <li><a class="nav-link scrollto active" href="{{ url_for('profile') }}">Profile</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+<div class="container" style="margin-top: 100px;">
     <div class="main-body">
         <div class="row">
             <div class="col-lg-4">
