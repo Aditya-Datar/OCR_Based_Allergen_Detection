@@ -44,8 +44,8 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        fullName = request.form['name']
-        email = request.form['email']
+        fullName = request.form['name'].strip()
+        email = request.form['email'].strip()
         password = request.form['password']
         query = {
             "$or": [
@@ -82,7 +82,7 @@ def index():
 # Upload endpoint
 @app.route('/upload', methods=['POST'])
 def upload():
-    if 'username' in session:
+    if 'email' in session:
         img_data = request.form.to_dict()
         img_data = img_data["image_data"]
         img_bytes = base64.b64decode(img_data)
@@ -144,7 +144,7 @@ def update_profile():
         user = db.users.find_one({'email': session['email']})
         if user:
             updatedUserDetails = {'fullName':fullName, 'email':email, 'mobile':mobile, 'gender':gender, 'age':age, 'allergenCategory':allergenCategory,'allergenCategoryList':allergenCategoryList, 'otherAllergenList':otherAllergenList}
-            db.users.update_one({'username': session['username']}, {'$set': updatedUserDetails})
+            db.users.update_one({'email': session['email']}, {'$set': updatedUserDetails})
             return redirect(url_for('index'))
     else:
         return redirect(url_for('login'))
