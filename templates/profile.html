@@ -79,7 +79,7 @@
 
         <div class="logo">
             <!-- Uncomment below if you prefer to use an image logo -->
-            <a href="index.html"><img src="/static/img/logo.png" alt="" class="img-fluid"></a>
+            <a href="{{ url_for('index') }}"><img src="/static/img/logo.png" alt="" class="img-fluid"></a>
 
         </div>
         <div class="logo-text">
@@ -299,7 +299,7 @@
                                     <h6 class="mb-sm-0">Allergen List</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <textarea id="allergenList" class="form-control" name="allergenList" rows="3"></textarea>
+                                    <textarea id="allergenList" class="form-control" name="allergenList" rows="3" readonly></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">

@@ -7,6 +7,7 @@ from allergenDetector import check_allergens
 import os
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
@@ -25,38 +26,40 @@ db = mongo["OcrAllergenDbCluster"]
 def login():
     if request.method == 'POST':
         print(request.form)
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
-        user = db.users.find_one({'username': username})
+        user = db.users.find_one({'email': email})
         if user and user['password'] == password:
-            session['username'] = username
+            session['email'] = email
             return redirect(url_for('index'))
         else:
             return render_template('login.html', message='Invalid username or password')
     else:
-        return render_template('login.html')
+        if 'email' in session:
+            return render_template('index.html')
+        else:
+            return render_template('login.html')
 
 # Register page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
+        fullName = request.form['name']
         email = request.form['email']
         password = request.form['password']
         query = {
             "$or": [
-                {"username": username},
                 {"email": email}
             ]
         }
         # Check if username already exists
         user = db.users.find_one(query)
         if user is not None:
-            return render_template('login.html', message='Username or email already exists')
+            return render_template('login.html', message='Email already exists')
         else:
             # Insert new user to the database
-            db.users.insert_one({'username': username, 'password': password,'email': email})
-            session['username'] = username
+            db.users.insert_one({'email': email, 'password': password,'fullName':fullName})
+            session['email'] = email
             return redirect(url_for('profile'))
     else:
         return render_template('register.html')
@@ -64,14 +67,14 @@ def register():
 # Logout
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
+    session.pop('email', None)
     return redirect(url_for('index'))
 
 # Index page
 @app.route('/')
 def index():
-    if 'username' in session:
-        user = db.users.find_one({'username': session['username']})
+    if 'email' in session:
+        user = db.users.find_one({'email': session['email']})
         return render_template('index.html',user=user)
     else:
         return render_template('index.html')
@@ -97,8 +100,8 @@ def upload():
 # Profile page
 @app.route('/profile')
 def profile():
-    if 'username' in session:
-        user = db.users.find_one({'username': session['username']})
+    if 'email' in session:
+        user = db.users.find_one({'email': session['email']})
         if user:
             del user["_id"]
             print(user)
@@ -120,7 +123,7 @@ def update_profile():
     #     "Fruit Based":["Apple","Avocado","Banana","Cherry","Kiwi","Mango","Melon","Nectraine","Peach","Pear","Pineapple","strawberry","Plum","Tomato","Jackfruit"],
     #     "Cruciferous" : ["Broccoli","cauliflower","cabbage","kale","collard greens","kohlrabi"]
     #     }
-    if 'username' in session:
+    if 'email' in session:
         fullName = request.form.get('fullname')
         email = request.form.get('email')
         mobile = request.form.get('mobileNo')
@@ -147,5 +150,5 @@ def update_profile():
         return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    # app.run(host="0.0.0.0",ssl_context='adhoc')
+    # app.run(host="0.0.0.0",port=5000,ssl_context="adhoc",threaded=True)
     app.run(debug=True)
