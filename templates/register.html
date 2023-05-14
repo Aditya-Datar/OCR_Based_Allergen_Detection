@@ -40,7 +40,7 @@
                     <h2 class="form-title">Sign up</h2>
                     <form method="POST" action="{{ url_for('register') }}" class="register-form" id="register-form">
                         <div class="form-group">
-                            <input type="text" name="name" id="name" placeholder="Your Name" required/>
+                            <input type="text" name="name" id="name" placeholder="Full Name" required/>
                         </div>
                         <div class="form-group">
                             <input type="email" name="email" id="email" placeholder="Your Email" required/>
@@ -60,9 +60,23 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="form-group">
-                            <input type="password" name="confirm-password" id="confirm-password" placeholder="Repeat your password" required/>
+                        <div>
+                            <label for="confirm-password"></label>
+                            <input type="password" name="confirm-password" id="confirm-password" placeholder="Repeat your Password" />
                         </div>
+
+                        <div id="repeatClickable" style="margin-top: -30px;
+                        border-bottom: 1px solid #999; cursor: text;">
+                            <i class="bi bi-eye-slash" id="toggleRepeatPassword" style="margin-left: 90%; cursor: pointer;"></i>
+                        </div>
+                    </div>
+
+
+                        <!-- <div class="form-group">
+                            <input type="password" name="confirm-password" id="confirm-password" placeholder="Repeat your password" required/>
+                        </div> -->
                         <div class="form-group form-button">
                             <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
                         </div>
@@ -105,8 +119,10 @@
     </script>
     <script>
         const togglePassword = document.querySelector("#togglePassword");
+        const toggleRepeatPassword = document.querySelector("#toggleRepeatPassword");
         const password = document.querySelector("#password");
-
+        const confirmPassword = document.querySelector("#confirm-password");
+        
         togglePassword.addEventListener("click", function () {
             // toggle the type attribute
             const type = password.getAttribute("type") === "password" ? "text" : "password";
@@ -116,9 +132,21 @@
             this.classList.toggle("bi-eye");
         });
 
+        toggleRepeatPassword.addEventListener("click", function () {
+            // toggle the type attribute
+            const type = confirmPassword.getAttribute("type") === "password" ? "text" : "password";
+            confirmPassword.setAttribute("type", type);
+            
+            // toggle the icon
+            this.classList.toggle("bi-eye");
+        });
+
         $("#clickable").click(() => {
             $("#password").focus();
-        })
+        });
+        $("#repeatClickable").click(() => {
+            $("#confirm-password").focus();
+        });
     </script>
 </body>
 

@@ -141,7 +141,7 @@ def update_profile():
         #     finalAllergenList += allergenDict[allergen]
         # if otherAllergenList[0] != '':
         #     finalAllergenList.append(otherAllergenList)
-        user = db.users.find_one({'username': session['username']})
+        user = db.users.find_one({'email': session['email']})
         if user:
             updatedUserDetails = {'fullName':fullName, 'email':email, 'mobile':mobile, 'gender':gender, 'age':age, 'allergenCategory':allergenCategory,'allergenCategoryList':allergenCategoryList, 'otherAllergenList':otherAllergenList}
             db.users.update_one({'username': session['username']}, {'$set': updatedUserDetails})
