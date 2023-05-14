@@ -9,17 +9,21 @@
 
         //gender population
         gender = document.getElementById("gender");
-        genderOption = gender.querySelector(`option[value='${user.gender}']`);
-        genderOption.selected=true;
-
-        allergenCategory = user.allergenCategory;
-        checkboxes = $("input[name='allergens']")
-        for (var checkbox of checkboxes) {
-            if (allergenCategory.includes(checkbox.value))
-                checkbox.checked=true;
+        if(user.gender)
+        {
+            genderOption = gender.querySelector(`option[value='${user.gender}']`);
+            genderOption.selected = true;
         }
-
-
+        if(user.allergenCategory)
+        {
+            allergenCategory = user.allergenCategory;
+            checkboxes = $("input[name='allergens']");
+            for (var checkbox of checkboxes) {
+                if (allergenCategory.includes(checkbox.value))
+                    checkbox.checked=true;
+            }
+        }
+        
         $("#allergenList").attr("readonly", false);
         $("#allergenList").val(user.allergenCategoryList);
         $("#allergenList").attr("readonly", true);
@@ -36,6 +40,7 @@
             "Cruciferous": ["Broccoli", "cauliflower", "cabbage", "kale", "collard greens", "kohlrabi"]
         }
 
+        checkboxes = $("input[name='allergens']");
         $("input[name='allergens']").on("change", () => {
             console.log("checkboxes clicked");
             var allergenList = [];
@@ -227,7 +232,7 @@
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     <select class="form-control" id="gender" name="gender">
-                                        <option value="">-- Select an option --</option>
+                                        <option value="soa">-- Select an option --</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                         <option value="other">Prefer not to say</option>
