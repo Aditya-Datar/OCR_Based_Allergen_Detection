@@ -16,7 +16,7 @@ def getIngredientsFromExtractedText(image, text):
 
     ingredientsList = [token for token in tokens if token.lower() not in stopWords]
 
-    print("ingredientsList" + ingredientsList)
+    print("ingredientsList" + str(ingredientsList))
     return ingredientsList
     
 def getOcrImageText(image):
