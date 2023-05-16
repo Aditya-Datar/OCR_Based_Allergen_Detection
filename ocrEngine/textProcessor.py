@@ -9,8 +9,10 @@ load_dotenv()
 
 def getIngredientsFromExtractedText(image, text):
     text = getOcrImageText(image)
+    print(type(text))
     print("Extracted Text " + text)
-    tokens = word_tokenize(text)
+    tokens = text.split(",")
+    print(tokens)
     # Filter out non-ingredient words and return the list of ingredients
     stopWords = ["and", "of", "with", "in", "to", "for", "on", "per", "serving", "each", "product", "packet", "ingredients"]
 
@@ -22,15 +24,16 @@ def getIngredientsFromExtractedText(image, text):
 def getOcrImageText(image):
     # Set up the OCR.space API endpoint and parameters
     url = 'https://api.ocr.space/parse/image'
-    payload = {'apikey': os.getenv("tesseractKey"),'language': 'eng','isOverlayRequired': False,'base64Image': f'data:image/jpeg;base64,{getBase64String(image)}'}
+    payload = {'apikey': os.getenv("tesseractKey"),'language': 'eng','isOverlayRequired': False,'base64Image': f'data:image/jpg;base64,{getBase64String(image)}'}
     if(sys.getsizeof(payload) < 1024000):
         # Send the POST request to OCR.space API
         response = requests.post(url, data=payload)
+        print("API Response " , response)
         # Parse the JSON response to extract the text
         if response.status_code == 200:
             text = ""
             result = response.json()
-            print("API REsponse" + result)
+            print("API REsponse" , result)
             if result['ParsedResults']:
                 text = result['ParsedResults'][0]['ParsedText']
             return text

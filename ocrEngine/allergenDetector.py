@@ -4,6 +4,7 @@ from ocrEngine.textProcessor import getIngredientsFromExtractedText
 
 def getIngredientsList(image_path):
     image = cv2.imread(image_path)
+    image = cv2.flip(image, 1)
     if image is None or image.size == 0:
         raise ValueError("The image could not be loaded. Please check the file path and make sure the file exists.")
     

@@ -2,3 +2,4 @@
 /__pycache__/
 /.env
 /ocrEngine/__pycache__
+/ocrEngine/.env
