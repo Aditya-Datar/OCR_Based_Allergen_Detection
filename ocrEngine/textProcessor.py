@@ -30,6 +30,7 @@ def getOcrImageText(image):
         if response.status_code == 200:
             text = ""
             result = response.json()
+            print("API REsponse" + result)
             if result['ParsedResults']:
                 text = result['ParsedResults'][0]['ParsedText']
             return text
