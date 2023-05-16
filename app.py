@@ -3,11 +3,10 @@ from pymongo import MongoClient
 import base64
 import cv2
 import numpy as np
-from allergenDetector import check_allergens
+from ocrEngine.allergenDetector import checkUserAllergens
 import os
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
-
 
 
 load_dotenv()
@@ -92,7 +91,9 @@ def upload():
         img = cv2.flip(img,1)
         filepath = os.path.join('uploads', 'img.jpg')
         cv2.imwrite(filepath, img)
-        finalResponse = jsonify({'status': check_allergens(allergens, filepath)})
+        user = db.users.find_one({'email': session['email']})
+        userAllergens = user['allergenCategory'] + user['otherAllergenList']
+        finalResponse = jsonify({'status': checkUserAllergens(userAllergens, filepath)})
         os.remove(filepath)
         return finalResponse
     else:
@@ -115,33 +116,15 @@ def profile():
 # Update profile endpoint
 @app.route('/update_profile', methods=['POST'])
 def update_profile():
-    # allergenDict = {
-    #     "Gluten":["rice", "quinoa", "oats", "corn", "potatoes", "fruits", "vegetables", "nuts", "seeds", "legumes"],
-    #     "Dairy":["almond", "soy","coconut","oat milk","cheese", "yogurt", "ice cream","butter", "cream","dried milk","milk solids","powered milk","whey"],
-    #     "Nut" : ["pumpkin", "sunflower","sesame seeds","snack mixes","dried fruits","raisins","date","prunes","figs","apricots","peaches"],
-    #     "Soy" : ["almond milk", "coconut milk", "oat milk"],
-    #     "Meat Based": ["egg", "fish","red meat","chicken","mutton"],
-    #     "Fruit Based":["Apple","Avocado","Banana","Cherry","Kiwi","Mango","Melon","Nectraine","Peach","Pear","Pineapple","strawberry","Plum","Tomato","Jackfruit"],
-    #     "Cruciferous" : ["Broccoli","cauliflower","cabbage","kale","collard greens","kohlrabi"]
-    #     }
     if 'email' in session:
         fullName = request.form.get('fullname').strip()
         email = request.form.get('email').strip()
         mobile = request.form.get('mobileNo').strip()
         gender = request.form.get('gender')
         age = request.form.get('age')
-
         allergenCategory = request.form.getlist('allergens')
-
         otherAllergenList = request.form.get('otherAllergen').split(",")
         allergenCategoryList = request.form.get('allergenList').split(",")
-        # finalAllergenList = []
-        # print(otherAllergenList)
-        # print("Allergen Category ", allergenCategory)
-        # for allergen in allergenCategory:
-        #     finalAllergenList += allergenDict[allergen]
-        # if otherAllergenList[0] != '':
-        #     finalAllergenList.append(otherAllergenList)
         user = db.users.find_one({'email': session['email']})
         if user:
             updatedUserDetails = {'fullName':fullName, 'email':email, 'mobile':mobile, 'gender':gender, 'age':age, 'allergenCategory':allergenCategory,'allergenCategoryList':allergenCategoryList, 'otherAllergenList':otherAllergenList}
@@ -151,5 +134,4 @@ def update_profile():
         return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    # app.run(host="0.0.0.0",port=5000,ssl_context="adhoc",threaded=True)
     app.run(debug=True)
