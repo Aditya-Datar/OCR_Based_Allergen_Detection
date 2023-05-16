@@ -9,12 +9,14 @@ load_dotenv()
 
 def getIngredientsFromExtractedText(image, text):
     text = getOcrImageText(image)
+    print("Extracted Text " + text)
     tokens = word_tokenize(text)
     # Filter out non-ingredient words and return the list of ingredients
     stopWords = ["and", "of", "with", "in", "to", "for", "on", "per", "serving", "each", "product", "packet", "ingredients"]
 
     ingredientsList = [token for token in tokens if token.lower() not in stopWords]
 
+    print("ingredientsList" + ingredientsList)
     return ingredientsList
     
 def getOcrImageText(image):
