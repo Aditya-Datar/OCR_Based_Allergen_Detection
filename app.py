@@ -99,7 +99,7 @@ def upload():
         user = db.users.find_one({'email': session['email']})
         userAllergens = user['allergenCategory'] + user['otherAllergenList']
         finalResponse = jsonify({'status': checkUserAllergens(userAllergens, filepath, base64image, imgWidth, imgHeight)})
-        
+
         return finalResponse
     else:
         return redirect(url_for('login'))
