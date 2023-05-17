@@ -10,7 +10,7 @@ def getIngredientsList(filepath, image_path, imgWidth, imgHeight):
 
     if image is None or image.size == 0:
         raise ValueError("The image could not be loaded. Please check the file path and make sure the file exists.")
-    
+
     preProcessedImage = preprocessImage(image)
     extractedText = extractTextFromImage(preProcessedImage)
     ingredientsList = getIngredientsFromExtractedText(image_path,extractedText)
@@ -24,11 +24,12 @@ def compareIngredients(ingredientsList, userAllergens):
 
     # print(ingredients)
     userAllergens = [allergen.lower() for allergen in userAllergens]
-    
+
     # Check if any of the allergens are present in the ingredients list
     for allergen in userAllergens:
-        if allergen in ingredientsList:
-            return False
+        for ingredient in ingredientsList:
+            if allergen in ingredient:
+                return False
     return True
 
 def checkUserAllergens(userAllergens, filepath, image_path, imgWeight, imgHeight):
@@ -36,5 +37,5 @@ def checkUserAllergens(userAllergens, filepath, image_path, imgWeight, imgHeight
     result = compareIngredients(ingredientsList, userAllergens)
     if result:
         return "Product is safe to use ✅"
-    
+
     return "Product is not safe to use ❌"

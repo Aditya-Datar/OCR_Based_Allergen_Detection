@@ -7,6 +7,7 @@ from nltk.tokenize import word_tokenize
 from ocrEngine.imageProcessing import getBase64String
 from ocrEngine.imageCompression import compress_image
 from ocrEngine.textSpeller import correct_spelling
+import nltk
 
 
 load_dotenv()
@@ -15,6 +16,8 @@ def getIngredientsFromExtractedText(image, text):
     text = getOcrImageText(image)
     print(type(text))
     print("Extracted Text " + text)
+    # tokenized = nltk.word_tokenize(text)
+    # print(tokenized)
     tokens = text.split(",")
     print(tokens)
     # Filter out non-ingredient words and return the list of ingredients
@@ -23,12 +26,15 @@ def getIngredientsFromExtractedText(image, text):
     ingredientsList = [token for token in tokens if token.lower() not in stopWords]
 
     for i in range(len(ingredientsList)):
-        ingredientsList[i] = ingredientsList[i].strip()
         ingredientsList[i] = correct_spelling(ingredientsList[i])
+        ingredientsList[i] = ingredientsList[i].strip()
+        ingredientsList[i] = ingredientsList[i].replace("\n", " ")
+        ingredientsList[i] = ingredientsList[i].replace("\r", "")
+        ingredientsList[i] = ingredientsList[i].replace("\\", "")
 
     print("ingredientsList" + str(ingredientsList))
     return ingredientsList
-    
+
 def getOcrImageText(image):
     with open(os.getenv("imgPath"), "wb") as fh:
         fh.write(base64.decodebytes(bytes(image, 'utf-8')))
@@ -39,7 +45,7 @@ def getOcrImageText(image):
 
     with open(os.getenv("imgPath"), 'rb') as f:
         response = requests.post(url, files={os.getenv("imgPath"): f}, data=payload)
-    
+
     print("API Response " , response)
 
     if response.status_code == 200:
@@ -52,5 +58,4 @@ def getOcrImageText(image):
     else:
         print('Error:', response.status_code)
 
-    return ""   
-    
+    return ""
