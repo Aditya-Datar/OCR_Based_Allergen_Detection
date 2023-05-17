@@ -80,9 +80,9 @@
 <!-- Camera -->
 <main id="camera">
     <!-- Camera sensor -->
-    <canvas id="camera--sensor"></canvas>
+    <canvas id="camera--sensor" onload="adjustCanvas()" onresize="adjustCanvas1()"></canvas>
     <!-- Camera view -->
-    <video id="camera--view" autoplay playsinline></video>
+    <video id="camera--view" autoplay playsinline onload="adjustCanvas()" onresize="adjustCanvas()"></video>
     <!-- Camera output -->
     <img src="//:0" alt="" id="camera--output" style="display: none;">
     <div class="row align-items-center" id="clickPhoto"
@@ -106,7 +106,26 @@
     </div>
 </main>
 <!-- Reference to your JavaScript file -->
-<script src="https://docs.opencv.org/master/opencv.js"></script>
+
+<script>
+    function adjustCanvas() {
+        console.log("Adjusted Canvas!");
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        var canvas = document.getElementById("camera--sensor");
+        var video = document.getElementById("camera--view");
+
+        canvas.setAttribute('width', windowWidth);
+        canvas.setAttribute('height', (windowHeight * 0.7));
+        canvas.style= `width: ${windowWidth}; height: ${(windowHeight * 0.7)};`
+
+        // canvas.style.height = (windowHeight * 0.7);
+
+        video.setAttribute('width', windowWidth);
+        video.setAttribute('height', (windowHeight * 0.7));
+        video.style= `width: ${windowWidth}; height: ${(windowHeight * 0.7)};`
+    }
+</script>
 
 {% else %}
 

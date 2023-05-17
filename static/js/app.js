@@ -35,11 +35,10 @@ function cameraStart() {
 }
 // Take a picture when cameraTrigger is tapped
 cameraTrigger.onclick = function() {
-    cameraSensor.width = cameraView.videoWidth;
-    cameraSensor.height = cameraView.videoHeight;
-    cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+    cameraSensor.getContext("2d").drawImage(cameraView, 0, 0,window.innerWidth,(window.innerHeight * 0.7));
     cameraOutput.src = cameraSensor.toDataURL("image/png");
     cameraOutput.classList.add("taken");
+
     clickPhotoSection.style.display = "none";
     clickPhotoConfirmSection.style.display = "flex";
     cameraOutput.style.display = "block";
@@ -58,7 +57,7 @@ confirmButton.onclick = function() {
     jQuery.ajax({  
         type: 'POST',  
         url: '/upload', 
-        data:{"image_data": imagebase64data},  
+        data:{"image_data": imagebase64data, "windowWidth":window.innerWidth, "windowHeight":(window.innerHeight * 0.7)},  
         contentType: 'application/x-www-form-urlencoded',   
         success: function (out) {  
             $('#productStatusModal').modal('show');
