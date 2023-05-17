@@ -31,13 +31,17 @@
 
         var allergenDict = 
         {
-            "Gluten": ["rice", "quinoa", "oats", "corn", "potatoes", "fruits", "vegetables", "nuts", "seeds", "legumes"],
-            "Dairy": ["almond", "soy", "coconut", "oat milk", "cheese", "yogurt", "ice cream", "butter", "cream", "dried milk", "milk solids", "powered milk", "whey"],
-            "Nut": ["pumpkin", "sunflower", "sesame seeds", "snack mixes", "dried fruits", "raisins", "date", "prunes", "figs", "apricots", "peaches"],
-            "Soy": ["almond milk", "coconut milk", "oat milk"],
-            "Meat Based": ["egg", "fish", "red meat", "chicken", "mutton"],
-            "Fruit Based": ["Apple", "Avocado", "Banana", "Cherry", "Kiwi", "Mango", "Melon", "Nectarine", "Peach", "Pear", "Pineapple", "strawberry", "Plum", "Tomato", "Jackfruit"],
-            "Cruciferous": ["Broccoli", "cauliflower", "cabbage", "kale", "collard greens", "kohlrabi"]
+            "Gluten": ["Rice", " Quinoa", " Oats", " Corn", " Potatoes", " Fruits", " Vegetables", " Nuts", " Seeds, ",],
+            "Dairy": ["Almond", " Soy", " Coconut", " Oat Milk", " Cheese", " Yogurt", " Ice Cream", " Butter", " Cream", " Dried milk", " Milk Solids", " Powdered Milk", " Whey", " Butter Milk, "],
+            "Nut": ["Walnut"," Pumpkin Seeds", " Sunflower Seeds", " Sesame Seeds"," Peanut"," Snack mixes", " Dried Fruits", " Raisins", " Date", " Prunes", " Figs", " Apricots", " Peaches, "],
+            "Soy": ["Almond Milk", " Coconut Milk", " Oat Milk, "],
+            "Meat Based": ["Egg", " Fish", " Red Meat", " Chicken"," Prawns"," Crab"," Pork", " Mutton, "],
+            "Fruit Based": ["Apple", " Avocado", " Banana"," Black Berry", " Cherry", " Kiwi", " Orange", 
+            " Mango", " Melon", " Nectarine", " Peach", " Pear", " Pineapple", " Strawberry", " Plum", " Tomato", " Jackfruit, "],
+            "Citrus": ["Orange"," Lemon"," Kiwi"," Pineapple"," Grapefruit"," Tangerine, "],
+            "Cruciferous": ["Broccoli", " Cauliflower", " Cabbage", " Kale", " Collard Greens", " Kohlrabi, "],
+            "Legumes" : ["Lentils"," Peas"," Broad Beans"," Chikpeas"," Soybeans"," Lima"," Peanuts, "]
+
         }
 
         checkboxes = $("input[name='allergens']");
@@ -298,6 +302,18 @@
                                                 <input class="form-check-input" type="checkbox" name="allergens" value="Cruciferous" id="checkbox4">
                                                 <label class="form-check-label" for="checkbox4">
                                                     Cruciferous
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="allergens" value="Legumes" id="checkbox7">
+                                                <label class="form-check-label" for="checkbox7">
+                                                    Legumes
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="allergens" value="Citrus" id="checkbox8">
+                                                <label class="form-check-label" for="checkbox8">
+                                                    Citrus
                                                 </label>
                                             </div>
                                         </div>

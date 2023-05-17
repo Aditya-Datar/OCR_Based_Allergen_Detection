@@ -57,8 +57,17 @@ confirmButton.onclick = function() {
         data:{"image_data": imagebase64data, "windowWidth":window.innerWidth, "windowHeight":(window.innerHeight * 0.7)},  
         contentType: 'application/x-www-form-urlencoded',   
         success: function (out) {  
-            $('#productStatusModal').modal('show');
-            $('#productStatusModal').find('.modal-title').text(out.status);
+            if(out.status)
+            {
+                $('#productSafe').modal('show');
+                $('#productSafe').find('.modal-title').text("Product is safe to use ✅");
+            }
+            else
+            {
+                $('#productNotSafe').modal('show');
+                $('#productNotSafe').find('.modal-title').text("Product is not safe to use ❌");
+            }
+            
         },
         error: function (out) {  
             $('#productStatusModalUnsuccesfull').modal('show');

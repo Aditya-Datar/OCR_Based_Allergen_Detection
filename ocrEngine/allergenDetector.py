@@ -36,6 +36,6 @@ def checkUserAllergens(userAllergens, filepath, image_path, imgWeight, imgHeight
     ingredientsList = getIngredientsList(filepath, image_path, imgWeight, imgHeight)
     result = compareIngredients(ingredientsList, userAllergens)
     if result:
-        return "Product is safe to use ✅"
-
-    return "Product is not safe to use ❌"
+        return True
+    
+    return False
