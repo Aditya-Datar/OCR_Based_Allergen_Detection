@@ -24,7 +24,7 @@ def getIngredientsFromExtractedText(image, text):
 def getOcrImageText(image):
     # Set up the OCR.space API endpoint and parameters
     url = 'https://api.ocr.space/parse/image'
-    payload = {'apikey': os.getenv("tesseractKey"),'language': 'eng','isOverlayRequired': False,'base64Image': f'data:image/jpg;base64,{getBase64String(image)}'}
+    payload = {'apikey': os.getenv("tesseractKey"),'language': 'eng','isOverlayRequired': False,'base64Image': f'data:image/png;base64,{getBase64String(image)}'}
     if(sys.getsizeof(payload) < 1024000):
         # Send the POST request to OCR.space API
         response = requests.post(url, data=payload)

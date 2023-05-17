@@ -17,6 +17,6 @@ def extractTextFromImage(image):
 
 def getBase64String(image):
     # Convert the image to a base64-encoded string
-    _, buffer = cv2.imencode('.jpeg', image)
+    _, buffer = cv2.imencode('.png', image)
     base64Image = base64.b64encode(buffer).decode('utf-8')
     return base64Image
