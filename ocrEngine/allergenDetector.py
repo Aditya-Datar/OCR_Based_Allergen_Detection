@@ -2,9 +2,8 @@ import cv2
 from ocrEngine.imageProcessing import preprocessImage, extractTextFromImage
 from ocrEngine.textProcessor import getIngredientsFromExtractedText
 
-def getIngredientsList(image_path, imgWidth, imgHeight):
-    base64_image = image_path
-    image = cv2.imread(image_path)
+def getIngredientsList(filepath, image_path, imgWidth, imgHeight):
+    image = cv2.imread(filepath)
     image = cv2.resize(image, (int(float(imgWidth)), int(float(imgHeight))))
     # cv2.imshow('image', image)
     # cv2.waitKey(0)
@@ -14,7 +13,7 @@ def getIngredientsList(image_path, imgWidth, imgHeight):
     
     preProcessedImage = preprocessImage(image)
     extractedText = extractTextFromImage(preProcessedImage)
-    ingredientsList = getIngredientsFromExtractedText(base64_image,extractedText)
+    ingredientsList = getIngredientsFromExtractedText(image_path,extractedText)
 
     return ingredientsList
 
@@ -32,8 +31,8 @@ def compareIngredients(ingredientsList, userAllergens):
             return False
     return True
 
-def checkUserAllergens(userAllergens, image_path, imgWeight, imgHeight):
-    ingredientsList = getIngredientsList(image_path, imgWeight, imgHeight)
+def checkUserAllergens(userAllergens, filepath, image_path, imgWeight, imgHeight):
+    ingredientsList = getIngredientsList(filepath, image_path, imgWeight, imgHeight)
     result = compareIngredients(ingredientsList, userAllergens)
     if result:
         return "Product is safe to use ✅"
