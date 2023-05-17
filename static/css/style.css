@@ -101,9 +101,10 @@ body {
   
   #header .logo img {
     margin: 0px;
-    height: 65px;
-    width: 65px;
+    height: 80px;
+    width: 80px;
   }
+  
   
   /*--------------------------------------------------------------
   # Navigation Menu
@@ -132,7 +133,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0 10px 30px;
+    padding: 10px 30px 10px 30px;
     font-family: "Raleway", sans-serif;
     font-size: 15px;
     color: #47536e;
@@ -1319,20 +1320,51 @@ body {
 }
 
 @media (max-width: 600px) {
+
+  .navbar a,
+  .navbar a:focus {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0px 10px 30px;
+    font-family: "Raleway", sans-serif;
+    font-size: 15px;
+    color: #47536e;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
   
-    .logout{
-      width: 25%;
-      margin-left: 15px;
-    }
+    
   }
 
   .ads{
     text-align: left;
   }
+  .forDesktop{
+    display: block;
+  }
+  .forPhone{
+    display: none;
+  }
 @media (max-width: 600px) {
+  #header .logo img {
+    margin: 0px;
+    height: 65px;
+    width: 65px;
+  }
+  .forPhone{
+    display: block;
+  }
+  .forDesktop{
+    display: none;
+  }
   
     .ads{
       text-align: center;
+    }
+    .logout{
+      width: 28%;
+      margin-left: 15px;
     }
   }
 

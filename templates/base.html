@@ -81,6 +81,19 @@
     </div>
   </div>
 
+  <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="justify-content: center;">
+          <h5 class="modal-title" id="loadingModalLongTitle">Pop up</h5>
+        </div>
+        <div class="modal-body" style="display: flex; justify-content: center;">
+          <lottie-player src="https://assets4.lottiefiles.com/temp/lf20_Th7CEA.json"   background="transparent"  speed="1" class="lottie" loop autoplay></lottie-player>
+        </div>
+      </div>
+    </div>
+  </div>
+
   
   <div class="modal fade" id="Error404" tabindex="-1" role="dialog" aria-labelledby="productStatusModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -92,7 +105,24 @@
           <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_n5q8wfa8.json"  background="transparent"  speed="1" loop autoplay class="lottie"></lottie-player>
         </div>
         <div class="modal-footer">
-          <button type="button" data-bs-dismiss="modal" class="okay-class">Okay</button>
+          <button type="button" data-bs-dismiss="modal" class="okay-class" onclick="location.reload();">Okay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="justify-content: center;">
+          <h5 class="modal-title" id="logoutModalLongTitle">Do you really want to logout? </h5>
+        </div>
+        <div class="modal-body" style="display: flex; justify-content: center;">
+          <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_qp7ggaby.json"   background="transparent"  speed="1" loop autoplay class="lottie"></lottie-player>
+        </div>
+        <div class="modal-footer" style="justify-content: space-around !important;">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #3860b5 !important; color: white;">Cancel</button>
+          <button type="button" class="btn btn-danger"><a href="{{ url_for('index') }}" style="color: white;"> Yes, Continue </a></button>
         </div>
       </div>
     </div>

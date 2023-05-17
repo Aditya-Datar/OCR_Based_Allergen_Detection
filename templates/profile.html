@@ -4,6 +4,7 @@
 
 
 <script>
+
     window.onload = () => {
         var user = {{ user | tojson }};
 
@@ -98,15 +99,18 @@
         </div>
         <div class="logo-text">
             <!-- Uncomment below if you prefer to use an image logo -->
-            <h1 style="text-align: center;"><a href="{{ url_for('index') }}" style="font-size: 20px;"><span>Allergen Detection</span> <br>System</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <h1 style="text-align: center;" class="forPhone"><a href="{{ url_for('index') }}" style="font-size: 20px;"><span>Allergen Detection</span> <br>System</a></h1>
+
+            <h1 style="text-align: center;"><a href="{{ url_for('index') }}" style="font-size: 33px;" class="forDesktop"><span>Allergen Detection</span> System</a></h1>
 
         </div>
 
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a class="nav-link scrollto active" href="{{ url_for('index') }}">Home</a></li>
-                <li><a class="nav-link scrollto" href="{{ url_for('profile') }}">Profile</a></li>
-                <a href="{{ url_for('logout') }}" class = "logout" style="color: white;">Logout</a>
+                <li><a class="nav-link scrollto" href="{{ url_for('index') }}">Home</a></li>
+                <li><a class="nav-link scrollto active" href="{{ url_for('profile') }}">Profile</a></li>
+                <a class = "logout" style="color: white;" onclick="$('#logoutModal').modal('show')">Logout</a>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -114,10 +118,10 @@
     </div>
 </header><!-- End Header -->
 
-<div class="container" style="margin-top: 100px;">
+<div class="container" style="margin-top: 120px;">
     <div class="main-body">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4" data-aos="fade-down">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
@@ -155,6 +159,14 @@
                                     <td>Fruit-Based</td>
                                     <td>Pineapple, Lemons, Plums</td>
                                   </tr>
+                                  <tr>
+                                    <td>Citrus</td>
+                                    <td>Orange, Lemon, Kiwi</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Legumes</td>
+                                    <td>Lentils, Peas, Broad Beans</td>
+                                  </tr>
                                   <tr style="border-bottom: hidden;">
                                     <td>Cruciferous</td>
                                     <td>Broccoli, Spinach, Celery</td>
@@ -162,47 +174,17 @@
                                 </tbody>
                               </table>
                         </div>
-                        <!-- <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0">Gluten</h6>
-                                <span class="text-secondary">Wheat, Barley, Rye</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0">Dairy</h6>
-                                <span class="text-secondary">Milk, Cheese, Yoghurt</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0">Nut</h6>
-                                <span class="text-secondary">Almonds, Peanuts, Walnuts</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0">Soy</h6>
-                                <span class="text-secondary">Tofu, Soy Milk, Soy Sauce</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0">Meat-Based</h6>
-                                <span class="text-secondary">Fish, Chicken, Eggs, Mutton</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0">Fruit-Based</h6>
-                                <span class="text-secondary">Pineapple, Lemons, Plums</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0">Cruciferous</h6>
-                                <span class="text-secondary">Broccoli, Spinach, Celery</span>
-                            </li>
-                        </ul> -->
                         <hr style="margin-top: 0px;">
                         <div class="row">
                             <div class="col-sm-12 text-secondary" style="text-align: center;">
-                                <a href="{{ url_for('logout') }}" class="btn btn-dark px-4">Log Out</a>
+                                <a class="btn btn-danger px-4" onclick="$('#logoutModal').modal('show')">Log Out</a>
                             </div>
                         </div>
 
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-8" data-aos="fade-up">
                 <form action="{{ url_for('update_profile') }}" method="POST">
                     <div class="card">
                         <div class="card-body">
@@ -299,21 +281,17 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="allergens" value="Cruciferous" id="checkbox4">
-                                                <label class="form-check-label" for="checkbox4">
-                                                    Cruciferous
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="allergens" value="Legumes" id="checkbox7">
-                                                <label class="form-check-label" for="checkbox7">
-                                                    Legumes
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="allergens" value="Citrus" id="checkbox8">
                                                 <label class="form-check-label" for="checkbox8">
                                                     Citrus
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="allergens" value="Citrus" id="checkbox8">
+                                                <label class="form-check-label" for="checkbox8">
+                                                    Legumes
                                                 </label>
                                             </div>
                                         </div>
@@ -340,7 +318,7 @@
                             <div class="row">
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-9 text-secondary" style="text-align: center;">
-                                    <input type="submit" class="btn btn-primary px-4" value="Save Changes">
+                                    <input type="submit" class="btn btn-primary px-4" value="Save Changes" style="background-color: #3860b5 !important; color: white; border-color: #3860b5;">
                                 </div>
                             </div>
                         </div>

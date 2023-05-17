@@ -15,6 +15,7 @@ def getIngredientsFromExtractedText(image, text):
     print("Extracted Text " + text)
     tokens = text.split(",")
     print(tokens)
+
     # Filter out non-ingredient words and return the list of ingredients
     stopWords = ["and", "of", "with", "in", "to", "for", "on", "per", "serving", "each", "product", "packet", "ingredients"]
 
@@ -34,12 +35,11 @@ def getOcrImageText(image):
     with open(os.getenv("imgPath"), "wb") as fh:
         fh.write(base64.decodebytes(bytes(image, 'utf-8')))
     compress_image(os.getenv("imgPath"), 1024000)
-    # Set up the OCR.space API endpoint and parameters
-    url = 'https://api.ocr.space/parse/image'
+    
     payload = {'apikey': os.getenv("tesseractKey"),'language': 'eng','isOverlayRequired': False}
 
     with open(os.getenv("imgPath"), 'rb') as f:
-        response = requests.post(url, files={os.getenv("imgPath"): f}, data=payload)
+        response = requests.post(os.getenv("url"), files={os.getenv("imgPath"): f}, data=payload)
 
     print("API Response " , response)
 

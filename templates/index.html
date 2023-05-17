@@ -61,7 +61,10 @@
         </div>
         <div class="logo-text">
             <!-- Uncomment below if you prefer to use an image logo -->
-            <h1 style="text-align: center;"><a href="{{ url_for('index') }}" style="font-size: 20px;"><span>Allergen Detection</span> <br>System</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <h1 style="text-align: center;" class="forPhone"><a href="{{ url_for('index') }}" style="font-size: 20px;"><span>Allergen Detection</span> <br>System</a></h1>
+
+            <h1 style="text-align: center;"><a href="{{ url_for('index') }}" style="font-size: 33px;" class="forDesktop"><span>Allergen Detection</span> System</a></h1>
 
         </div>
 
@@ -69,7 +72,7 @@
             <ul>
                 <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                 <li><a class="nav-link scrollto" href="{{ url_for('profile') }}">Profile</a></li>
-                <a href="{{ url_for('logout') }}" class = "logout" style="color: white;">Logout</a>
+                <a class = "logout" style="color: white;" onclick="$('#logoutModal').modal('show')">Logout</a>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -157,7 +160,9 @@
         </div>
         <div class="logo-text">
             <!-- Uncomment below if you prefer to use an image logo -->
-            <h1 style="text-align: center;"><a href="{{ url_for('index') }}" style="font-size: 20px;"><span>Allergen Detection</span> <br>System</a></h1>
+            <h1 style="text-align: center;" class="forPhone"><a href="{{ url_for('index') }}" style="font-size: 20px;"><span>Allergen Detection</span> <br>System</a></h1>
+
+            <h1 style="text-align: center;"><a href="{{ url_for('index') }}" style="font-size: 33px;" class="forDesktop"><span>Allergen Detection</span> System</a></h1>
 
         </div>
 
@@ -167,7 +172,7 @@
                 <li><a class="nav-link scrollto" href="#features">App Features</a></li>
                 <li><a class="nav-link scrollto" href="#faq">F.A.Q</a></li>
 
-                <li><a class="getstarted scrollto" href="{{ url_for('login') }}" class = "logout">Login</a></li>
+                <li><a class="getstarted scrollto logout" href="{{ url_for('login') }}">Login</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->

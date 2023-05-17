@@ -48,6 +48,8 @@ cancelButton.onclick = function() {
 };
 
 confirmButton.onclick = function() {
+    $('#loadingModal').modal('show');
+    $('#loadingModal').find('.modal-title').text("Computing Results 🔃");
     var imagebase64data = cameraOutput.src;  
     imagebase64data = imagebase64data.replace('data:image/jpeg;base64,', '');
     jQuery.ajax({  
@@ -58,11 +60,13 @@ confirmButton.onclick = function() {
         success: function (out) {  
             if(out.status)
             {
+                $('#loadingModal').modal('hide');
                 $('#productSafe').modal('show');
                 $('#productSafe').find('.modal-title').text("Product is safe to use ✅");
             }
             else
             {
+                $('#loadingModal').modal('hide');
                 $('#productNotSafe').modal('show');
                 $('#productNotSafe').find('.modal-title').text("Product is not safe to use ❌");
             }
