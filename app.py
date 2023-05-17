@@ -84,17 +84,18 @@ def index():
 def upload():
     if 'email' in session:
         img_data = request.form.to_dict()
+        imgWidth = img_data["windowWidth"]
+        imgHeight = img_data["windowHeight"]
         img_data = img_data["image_data"]
         img_bytes = base64.b64decode(img_data)
         img_np = np.frombuffer(img_bytes, np.uint8)
         img = cv2.imdecode(img_np, cv2.IMREAD_COLOR)
-        img = cv2.flip(img,1)
-        filepath = os.path.join('uploads', 'img.jpg')
+        filepath = os.path.join('uploads', 'img.png')
         print("filepath is" + filepath)
         cv2.imwrite(filepath, img)
         user = db.users.find_one({'email': session['email']})
         userAllergens = user['allergenCategory'] + user['otherAllergenList']
-        finalResponse = jsonify({'status': checkUserAllergens(userAllergens, filepath)})
+        finalResponse = jsonify({'status': checkUserAllergens(userAllergens, filepath, img_data, imgWidth, imgHeight)})
         return finalResponse
     else:
         return redirect(url_for('login'))

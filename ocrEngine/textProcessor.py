@@ -1,6 +1,7 @@
 import os
 import sys
 import requests
+import base64
 from dotenv import load_dotenv
 from nltk.tokenize import word_tokenize
 from ocrEngine.imageProcessing import getBase64String
@@ -22,23 +23,27 @@ def getIngredientsFromExtractedText(image, text):
     return ingredientsList
     
 def getOcrImageText(image):
+    with open(os.getenv("imgPath"), "wb") as fh:
+        fh.write(base64.decodebytes(bytes(image, 'utf-8')))
+
     # Set up the OCR.space API endpoint and parameters
     url = 'https://api.ocr.space/parse/image'
-    payload = {'apikey': os.getenv("tesseractKey"),'language': 'eng','isOverlayRequired': False,'base64Image': f'data:image/jpg;base64,{getBase64String(image)}'}
-    if(sys.getsizeof(payload) < 1024000):
-        # Send the POST request to OCR.space API
-        response = requests.post(url, data=payload)
-        print("API Response " , response)
-        # Parse the JSON response to extract the text
-        if response.status_code == 200:
-            text = ""
-            result = response.json()
-            print("API REsponse" , result)
-            if result['ParsedResults']:
-                text = result['ParsedResults'][0]['ParsedText']
-            return text
-        else:
-            print('Error:', response.status_code)
+    payload = {'apikey': os.getenv("tesseractKey"),'language': 'eng','isOverlayRequired': False}
+
+    with open(os.getenv("imgPath"), 'rb') as f:
+        response = requests.post(url, files={os.getenv("imgPath"): f}, data=payload)
+    
+    print("API Response " , response)
+
+    if response.status_code == 200:
+        text = ""
+        result = response.json()
+        print("API REsponse" , result)
+        if result['ParsedResults']:
+            text = result['ParsedResults'][0]['ParsedText']
+        return text
+    else:
+        print('Error:', response.status_code)
 
     return ""   
     

@@ -2,12 +2,9 @@
 var constraints =
 {
     video:{
-        width: 1920,
-        height: 1080 ,
         frameRate:30,
         facingMode: "environment", 
-        audio: false,
-        aspectRatio:0.5625 
+        audio: false
     }
 };
 // Define constants
@@ -35,14 +32,13 @@ function cameraStart() {
 }
 // Take a picture when cameraTrigger is tapped
 cameraTrigger.onclick = function() {
-    cameraSensor.width = cameraView.videoWidth;
-    cameraSensor.height = cameraView.videoHeight;
-    cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-    cameraOutput.src = cameraSensor.toDataURL("image/png");
-    cameraOutput.classList.add("taken");
+    document.getElementById("image-upload").click();
     clickPhotoSection.style.display = "none";
     clickPhotoConfirmSection.style.display = "flex";
+
     cameraOutput.style.display = "block";
+    cameraOutput.style.width = window.innerWidth;
+    cameraOutput.style.height = (window.innerHeight * 0.7);
 };
 
 // Take a picture when cameraTrigger is tapped
@@ -54,11 +50,11 @@ cancelButton.onclick = function() {
 
 confirmButton.onclick = function() {
     var imagebase64data = cameraOutput.src;  
-    imagebase64data = imagebase64data.replace('data:image/png;base64,', '');  
+    imagebase64data = imagebase64data.replace('data:image/jpg;base64,', '');  
     jQuery.ajax({  
         type: 'POST',  
         url: '/upload', 
-        data:{"image_data": imagebase64data},  
+        data:{"image_data": imagebase64data, "windowWidth":window.innerWidth, "windowHeight":(window.innerHeight * 0.7)},  
         contentType: 'application/x-www-form-urlencoded',   
         success: function (out) {  
             $('#productStatusModal').modal('show');

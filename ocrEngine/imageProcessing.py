@@ -1,8 +1,11 @@
 import cv2
 import base64
 import pytesseract
+import os
+from dotenv import load_dotenv
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+load_dotenv()
+pytesseract.pytesseract.tesseract_cmd = os.getenv("tesseractPath")
 
 def preprocessImage(image):
     grayedImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -17,6 +20,6 @@ def extractTextFromImage(image):
 
 def getBase64String(image):
     # Convert the image to a base64-encoded string
-    _, buffer = cv2.imencode('.jpeg', image)
+    _, buffer = cv2.imencode('.png', image)
     base64Image = base64.b64encode(buffer).decode('utf-8')
     return base64Image

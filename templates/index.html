@@ -80,14 +80,15 @@
 <!-- Camera -->
 <main id="camera">
     <!-- Camera sensor -->
-    <canvas id="camera--sensor"></canvas>
+    <canvas id="camera--sensor" onload="adjustCanvas()" onresize="adjustCanvas1()"></canvas>
     <!-- Camera view -->
-    <video id="camera--view" autoplay playsinline></video>
+    <video id="camera--view" autoplay playsinline onload="adjustCanvas()" onresize="adjustCanvas()"></video>
     <!-- Camera output -->
-    <img src="//:0" alt="" id="camera--output" style="display: none;">
+    <img src="//:0" alt="" id="camera--output" style="display: none;" >
     <div class="row align-items-center" id="clickPhoto"
         style="position: inherit;bottom: 4%;width: 100%;margin: 0 !important;text-align: center;">
         <div class="col-12">
+            <input type="file" accept="image/*" capture="camera" id="image-upload" style="display: none;" onchange="myfunc()"/>
             <!-- Camera trigger -->
             <button class="camera-trigger" id="camera--trigger"><i class="fa-solid fa-camera fa-2xl"></i></button>
         </div>
@@ -97,6 +98,7 @@
         style="display: none;position: inherit;bottom: 4%;width: 100%;margin: 0 !important;text-align: center;">
         <div class="col-6">
             <!-- Camera trigger -->
+            
             <button class="camera-trigger btn btn-success" id="confirm-button"><i class="fa-solid fa-check fa-2xl" style="color: #07c804;"></i></button>
         </div>
         <div class="col-6">
@@ -106,7 +108,40 @@
     </div>
 </main>
 <!-- Reference to your JavaScript file -->
-<script src="https://docs.opencv.org/master/opencv.js"></script>
+
+<script>
+    function adjustCanvas() {
+        console.log("Adjusted Canvas!");
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        var canvas = document.getElementById("camera--sensor");
+        var video = document.getElementById("camera--view");
+
+        canvas.setAttribute('width', windowWidth);
+        canvas.setAttribute('height', (windowHeight * 0.7));
+        canvas.style= `width: ${windowWidth}; height: ${(windowHeight * 0.7)};`
+
+        // canvas.style.height = (windowHeight * 0.7);
+
+        video.setAttribute('width', windowWidth);
+        video.setAttribute('height', (windowHeight * 0.7));
+        video.style= `width: ${windowWidth}; height: ${(windowHeight * 0.7)};`
+    }
+
+    function myfunc(){
+        console.log("Inside myfuck")
+        const selectedFile = document.getElementById("image-upload").files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+        reader.onload = function () {
+            document.getElementById("camera--output").src = reader.result;
+            console.log(reader.result);
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        }; 
+    }
+</script>
 
 {% else %}
 
