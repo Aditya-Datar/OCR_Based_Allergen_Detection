@@ -32,13 +32,13 @@ function cameraStart() {
 }
 // Take a picture when cameraTrigger is tapped
 cameraTrigger.onclick = function() {
-    cameraSensor.getContext("2d").drawImage(cameraView, 0, 0,window.innerWidth,(window.innerHeight * 0.7));
-    cameraOutput.src = cameraSensor.toDataURL("image/png");
-    cameraOutput.classList.add("taken");
-
+    document.getElementById("image-upload").click();
     clickPhotoSection.style.display = "none";
     clickPhotoConfirmSection.style.display = "flex";
+
     cameraOutput.style.display = "block";
+    cameraOutput.style.width = window.innerWidth;
+    cameraOutput.style.height = (window.innerHeight * 0.7);
 };
 
 // Take a picture when cameraTrigger is tapped
@@ -50,7 +50,7 @@ cancelButton.onclick = function() {
 
 confirmButton.onclick = function() {
     var imagebase64data = cameraOutput.src;  
-    imagebase64data = imagebase64data.replace('data:image/png;base64,', '');  
+    imagebase64data = imagebase64data.replace('data:image/jpeg;base64,', '');  
     jQuery.ajax({  
         type: 'POST',  
         url: '/upload', 

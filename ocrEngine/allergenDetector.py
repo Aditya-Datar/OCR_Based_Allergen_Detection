@@ -4,9 +4,9 @@ from ocrEngine.textProcessor import getIngredientsFromExtractedText
 
 def getIngredientsList(image_path, imgWidth, imgHeight):
     image = cv2.imread(image_path)
-    image = cv2.resize(image, (int(float(imgWidth)), int(float(imgHeight))))
-    # cv2.imshow('image', image)
-    # cv2.waitKey(0)
+    # image = cv2.resize(image, (int(float(imgWidth)), int(float(imgHeight))))
+    cv2.imshow('image', image)
+    cv2.waitKey(0)
 
     if image is None or image.size == 0:
         raise ValueError("The image could not be loaded. Please check the file path and make sure the file exists.")

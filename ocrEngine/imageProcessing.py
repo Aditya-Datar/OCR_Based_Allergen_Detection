@@ -1,8 +1,11 @@
 import cv2
 import base64
 import pytesseract
+import os
+from dotenv import load_dotenv
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+load_dotenv()
+pytesseract.pytesseract.tesseract_cmd = os.getenv("tesseractPath")
 
 def preprocessImage(image):
     grayedImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
