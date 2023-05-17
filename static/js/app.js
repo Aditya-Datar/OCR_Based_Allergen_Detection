@@ -49,8 +49,7 @@ cancelButton.onclick = function() {
 };
 
 confirmButton.onclick = function() {
-    var imagebase64data = cameraOutput.src;  
-    imagebase64data = imagebase64data.replace('data:image/jpg;base64,', '');  
+    var imagebase64data = cameraOutput.src;
     jQuery.ajax({  
         type: 'POST',  
         url: '/upload', 
