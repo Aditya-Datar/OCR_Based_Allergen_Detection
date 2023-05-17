@@ -1,8 +1,9 @@
-from PIL import Image
+from PIL import Image,ImageOps
 import os
 
 def compress_image(input_path, target_size):
     image = Image.open(input_path)
+    image = ImageOps.exif_transpose(image)
     # Set an initial quality level
     quality = 100
     while os.path.exists(input_path) and os.path.getsize(input_path) > target_size:

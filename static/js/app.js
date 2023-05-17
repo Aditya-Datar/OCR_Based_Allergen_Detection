@@ -35,10 +35,9 @@ cameraTrigger.onclick = function() {
     document.getElementById("image-upload").click();
     clickPhotoSection.style.display = "none";
     clickPhotoConfirmSection.style.display = "flex";
-
     cameraOutput.style.display = "block";
-    cameraOutput.style.width = window.innerWidth;
-    cameraOutput.style.height = (window.innerHeight * 0.7);
+    cameraOutput.style.width = "100%";
+    cameraOutput.style.height = "70%";
 };
 
 // Take a picture when cameraTrigger is tapped
