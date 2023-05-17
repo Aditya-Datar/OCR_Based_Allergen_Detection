@@ -50,7 +50,7 @@ cancelButton.onclick = function() {
 
 confirmButton.onclick = function() {
     var imagebase64data = cameraOutput.src;  
-    imagebase64data = imagebase64data.replace('data:image/jpeg;base64,', '');  
+    imagebase64data = imagebase64data.replace('data:image/jpg;base64,', '');  
     jQuery.ajax({  
         type: 'POST',  
         url: '/upload', 

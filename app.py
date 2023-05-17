@@ -95,7 +95,7 @@ def upload():
         cv2.imwrite(filepath, img)
         user = db.users.find_one({'email': session['email']})
         userAllergens = user['allergenCategory'] + user['otherAllergenList']
-        finalResponse = jsonify({'status': checkUserAllergens(userAllergens, filepath, imgWidth, imgHeight)})
+        finalResponse = jsonify({'status': checkUserAllergens(userAllergens, img_data, imgWidth, imgHeight)})
         return finalResponse
     else:
         return redirect(url_for('login'))

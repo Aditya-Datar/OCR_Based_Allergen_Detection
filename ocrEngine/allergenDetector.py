@@ -3,8 +3,9 @@ from ocrEngine.imageProcessing import preprocessImage, extractTextFromImage
 from ocrEngine.textProcessor import getIngredientsFromExtractedText
 
 def getIngredientsList(image_path, imgWidth, imgHeight):
+    base64_image = image_path
     image = cv2.imread(image_path)
-    # image = cv2.resize(image, (int(float(imgWidth)), int(float(imgHeight))))
+    image = cv2.resize(image, (int(float(imgWidth)), int(float(imgHeight))))
     # cv2.imshow('image', image)
     # cv2.waitKey(0)
 
@@ -13,7 +14,8 @@ def getIngredientsList(image_path, imgWidth, imgHeight):
     
     preProcessedImage = preprocessImage(image)
     extractedText = extractTextFromImage(preProcessedImage)
-    ingredientsList = getIngredientsFromExtractedText(image,extractedText)
+    ingredientsList = getIngredientsFromExtractedText(base64_image,extractedText)
+
     return ingredientsList
 
 def compareIngredients(ingredientsList, userAllergens):
