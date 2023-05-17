@@ -2,12 +2,9 @@
 var constraints =
 {
     video:{
-        width: 1920,
-        height: 1080 ,
         frameRate:30,
         facingMode: "environment", 
-        audio: false,
-        aspectRatio:0.5625 
+        audio: false
     }
 };
 // Define constants
