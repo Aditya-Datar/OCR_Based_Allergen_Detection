@@ -52,30 +52,36 @@ confirmButton.onclick = function() {
     $('#loadingModal').find('.modal-title').text("Computing Results 🔃");
     var imagebase64data = cameraOutput.src;  
     imagebase64data = imagebase64data.replace('data:image/jpeg;base64,', '');
+    console.log({"image_data": imagebase64data, "windowWidth": window.innerWidth, "windowHeight":(window.innerHeight * 0.7)});
     jQuery.ajax({  
         type: 'POST',  
         url: '/upload', 
-        data:{"image_data": imagebase64data, "windowWidth":window.innerWidth, "windowHeight":(window.innerHeight * 0.7)},  
+        data:{"image_data": imagebase64data, "windowWidth": window.innerWidth, "windowHeight":(window.innerHeight * 0.7)},  
         contentType: 'application/x-www-form-urlencoded',   
         success: function (out) {  
             if(out.status)
             {
-                $('#loadingModal').modal('hide');
                 $('#productSafe').modal('show');
                 $('#productSafe').find('.modal-title').text("Product is safe to use ✅");
             }
             else
             {
-                $('#loadingModal').modal('hide');
                 $('#productNotSafe').modal('show');
                 $('#productNotSafe').find('.modal-title').text("Product is not safe to use ❌");
             }
             
         },
         error: function (out) {  
+            setTimeout(function () {
+                $('#loadingModal').modal('hide');
+            }, 1000);
             $('#productStatusModalUnsuccesfull').modal('show');
-            $('#productStatusModalUnsuccesfull').find('.modal-title').text("Upload unsuccessful!!");      
+            $('#productStatusModalUnsuccesfull').find('.modal-title').text("Upload unsuccessful!!");
+            
+
         } 
+    }).done(() => {
+        $('#loadingModal').modal('hide');
     });
     cancelButton.click();
 };
