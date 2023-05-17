@@ -5,6 +5,9 @@ import base64
 from dotenv import load_dotenv
 from nltk.tokenize import word_tokenize
 from ocrEngine.imageProcessing import getBase64String
+from ocrEngine.imageCompression import compress_image
+from ocrEngine.textSpeller import correct_spelling
+
 
 load_dotenv()
 
@@ -19,13 +22,17 @@ def getIngredientsFromExtractedText(image, text):
 
     ingredientsList = [token for token in tokens if token.lower() not in stopWords]
 
+    for i in range(len(ingredientsList)):
+        ingredientsList[i] = ingredientsList[i].strip()
+        ingredientsList[i] = correct_spelling(ingredientsList[i])
+
     print("ingredientsList" + str(ingredientsList))
     return ingredientsList
     
 def getOcrImageText(image):
     with open(os.getenv("imgPath"), "wb") as fh:
         fh.write(base64.decodebytes(bytes(image, 'utf-8')))
-
+    compress_image(os.getenv("imgPath"), 1024)
     # Set up the OCR.space API endpoint and parameters
     url = 'https://api.ocr.space/parse/image'
     payload = {'apikey': os.getenv("tesseractKey"),'language': 'eng','isOverlayRequired': False}
