@@ -7,7 +7,7 @@ from ocrEngine.allergenDetector import checkUserAllergens
 import os
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import re
 
 load_dotenv()
 
@@ -97,9 +97,8 @@ def upload():
         cv2.imwrite(filepath, img)
         print("File Path: " + filepath)
         user = db.users.find_one({'email': session['email']})
-        userAllergens = user['allergenCategory'] + user['otherAllergenList']
+        userAllergens = user['allergenCategoryList'] + user['otherAllergenList']
         finalResponse = jsonify({'status': checkUserAllergens(userAllergens, filepath, base64image, imgWidth, imgHeight)})
-
         return finalResponse
     else:
         return redirect(url_for('login'))
@@ -128,11 +127,21 @@ def update_profile():
         gender = request.form.get('gender')
         age = request.form.get('age')
         allergenCategory = request.form.getlist('allergens')
-        print(request.form)
-        allergenCategoryList = request.form.get('allergenList').split(", ")
-        if(len(allergenCategoryList)):
-            del allergenCategoryList[-1]
-        otherAllergenList = request.form.get('otherAllergen').split(",")
+
+        allergenCategoryList = []
+        if(len(allergenCategory)):
+            allergenCategoryList = request.form.get('allergenList').split(",")
+            for i in range(len(allergenCategoryList)):
+                allergenCategoryList[i] = allergenCategoryList[i].strip()
+            allergenCategoryList.pop()
+        
+        otherAllergenList = []
+        if(request.form.get('otherAllergen') != ""):
+            otherAllergenList = re.sub(' +', ' ', request.form.get('otherAllergen').strip())
+            otherAllergenList = otherAllergenList.split(",")
+            for i in range(len(otherAllergenList)):
+                otherAllergenList[i] = otherAllergenList[i].strip()
+        
         user = db.users.find_one({'email': session['email']})
         if user:
             updatedUserDetails = {'fullName':fullName, 'email':email, 'mobile':mobile, 'gender':gender, 'age':age, 'allergenCategory':allergenCategory,'allergenCategoryList':allergenCategoryList, 'otherAllergenList':otherAllergenList}

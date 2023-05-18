@@ -18,4 +18,4 @@ def compress_image(input_path, target_size):
         # Break the loop if the quality level reaches 0
         if quality <= 0:
             break
-
+    image = ImageOps.exif_transpose(image)
