@@ -11,7 +11,7 @@ load_dotenv()
 
 def getIngredientsFromExtractedText(image, text):
     text = getOcrImageText(image)
-    print(type(text))
+    # print(type(text))
     print("Extracted Text " + text)
     tokens = text.split(",")
     print(tokens)
@@ -27,7 +27,7 @@ def getIngredientsFromExtractedText(image, text):
         ingredientsList[i] = ingredientsList[i].replace("\r", "")
         ingredientsList[i] = ingredientsList[i].replace("\n", " ")
         ingredientsList[i] = ingredientsList[i].replace("\\", "")
-    
+
     print("ingredientsList" + str(ingredientsList))
     return ingredientsList
 
@@ -35,22 +35,19 @@ def getOcrImageText(image):
     with open(os.getenv("imgPath"), "wb") as fh:
         fh.write(base64.decodebytes(bytes(image, 'utf-8')))
     compress_image(os.getenv("imgPath"), 1024000)
-    
+
     payload = {'apikey': os.getenv("tesseractKey"),'language': 'eng','isOverlayRequired': False}
 
     with open(os.getenv("imgPath"), 'rb') as f:
         response = requests.post(os.getenv("url"), files={os.getenv("imgPath"): f}, data=payload)
 
-    print("API Response " , response)
-
     if response.status_code == 200:
         text = ""
         result = response.json()
-        print("API REsponse" , result)
         if result['ParsedResults']:
             text = result['ParsedResults'][0]['ParsedText']
         return text
     else:
-        print('Error:', response.status_code)
-        
+        print('Error:Something went wrong')
+
     return ""
