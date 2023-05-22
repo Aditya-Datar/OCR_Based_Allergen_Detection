@@ -1,23 +1,23 @@
 import os
-import sys
 import requests
 import base64
 from dotenv import load_dotenv
 from ocrEngine.imageCompression import compress_image
-from ocrEngine.textSpeller import correct_spelling
-
+from ocrEngine.textSpeller import correct_spelling, check_accuracy
 
 load_dotenv()
 
 def getIngredientsFromExtractedText(image, text):
-    text = getOcrImageText(image)
+    print("Accuracy is: ", check_accuracy(text))
+    if(check_accuracy(text) < 90):
+        text = getOcrImageText(image)
     print(type(text))
     print("Extracted Text " + text)
     tokens = text.split(",")
     print(tokens)
 
     # Filter out non-ingredient words and return the list of ingredients
-    stopWords = ["and", "of", "with", "in", "to", "for", "on", "per", "serving", "each", "product", "packet", "ingredients"]
+    stopWords = ["and", "of", "with", "in", "to", "for", "on", "per", "serving", "each", "product", "packet"]
 
     ingredientsList = [token for token in tokens if token.lower() not in stopWords]
 
@@ -32,6 +32,7 @@ def getIngredientsFromExtractedText(image, text):
     return ingredientsList
 
 def getOcrImageText(image):
+    print("Fetching data through API: ")
     with open(os.getenv("imgPath"), "wb") as fh:
         fh.write(base64.decodebytes(bytes(image, 'utf-8')))
     compress_image(os.getenv("imgPath"), 1024000)

@@ -17,7 +17,6 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
 
-allergens = ["rice", "quinoa", "oats", "corn", "potatoes", "fruits", "vegetables", "nuts", "seeds", "legumes"]
 # Configure the MongoDB database
 mongo = MongoClient(MONGO_URI)
 db = mongo["OcrAllergenDbCluster"]

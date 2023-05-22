@@ -35,7 +35,4 @@ def compareIngredients(ingredientsList, userAllergens):
 def checkUserAllergens(userAllergens, filepath, image_path, imgWeight, imgHeight):
     ingredientsList = getIngredientsList(filepath, image_path, imgWeight, imgHeight)
     result = compareIngredients(ingredientsList, userAllergens)
-    if result:
-        return True
-    
-    return False
+    return result
